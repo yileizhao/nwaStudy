@@ -8,7 +8,8 @@ import os, time, redis, pickle, flask, face_recognition
 
 from werkzeug.utils import secure_filename
 
-from com.niwoa.core.globals import Globals
+from globals import Globals
+
 
 app = flask.Flask(__name__)
 con = redis.StrictRedis(connection_pool=redis.ConnectionPool(decode_responses=True))

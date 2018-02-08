@@ -3,7 +3,7 @@
 	<name>nwaFaceServer</name>
 	<comment></comment>
 	<projects>
-		<project>nwaCommon</project>
+		<project>nwaCore</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
