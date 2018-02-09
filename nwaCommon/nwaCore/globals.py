@@ -6,7 +6,7 @@ Created on 2018年2月5日
 
 import os
 
-from com.niwoa.core.enums import SignEnum
+from nwaCore.enums import SignEnum
 
 
 class Globals(object):
