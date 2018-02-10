@@ -4,14 +4,15 @@ Created on 2018年2月2日
 @author: root
 '''
 
-import os, time, redis, pickle, flask, face_recognition
+import os, time, redis, pickle, face_recognition
 
+from flask import Flask, request
 from werkzeug.utils import secure_filename
 
 from globals import Globals
 
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 con = redis.StrictRedis(connection_pool=redis.ConnectionPool(decode_responses=True))
 
 globalsCur = Globals(__file__, 1)
@@ -26,7 +27,7 @@ def root():
 # http://192.168.0.78:5000/face/upload
 @app.route("/face/upload", methods=["GET", "POST"])
 def upload():
-    if flask.request.method == "GET":
+    if request.method == "GET":
         return """
         <form method="POST" enctype="multipart/form-data" >
             <input type="file" name="file" /><br /><br />
@@ -34,8 +35,9 @@ def upload():
         </form>
                 """
     else:
-        f = flask.request.files["file"]
+        f = request.files["file"]
         fpath = os.path.join(globalsCur.project(), "upload", str(int(time.time())) + "_" + secure_filename(f.filename))
+        f.save(fpath)
         imgEnc = face_recognition.face_encodings(face_recognition.load_image_file(f))
         if len(imgEnc) > 0:
             imgEnc = imgEnc[0]
@@ -46,6 +48,7 @@ def upload():
             if True in imgMatchs:
                 return pickle.loads(con.hget(imgEncKey, imgEncs[imgMatchs.index(True)]))[1]
             else:
+                f.seek(0, os.SEEK_SET)
                 f.save(fpath)
                 con.hset(imgEncKey, imgEnc, pickle.dumps([imgEnc, fpath]))
                 return "upload success!"
