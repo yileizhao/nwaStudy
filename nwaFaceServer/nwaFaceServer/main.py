@@ -14,7 +14,7 @@ from globals import Globals
 app = flask.Flask(__name__)
 con = redis.StrictRedis(connection_pool=redis.ConnectionPool(decode_responses=True))
 
-globalsCur = Globals(__file__, 2)
+globalsCur = Globals(__file__, 1)
 imgEncKey = globalsCur.key("imgEnc")
 
 
@@ -23,7 +23,7 @@ def root():
     return ""
 
 
-# http://192.168.0.211:5000/face/upload
+# http://192.168.0.78:5000/face/upload
 @app.route("/face/upload", methods=["GET", "POST"])
 def upload():
     if flask.request.method == "GET":
@@ -54,4 +54,4 @@ def upload():
 
 
 if __name__ == '__main__':
-    app.run(host="192.168.0.211", debug=True)
+    app.run(host="192.168.0.78", debug=True)

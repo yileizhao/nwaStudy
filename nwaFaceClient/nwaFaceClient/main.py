@@ -18,6 +18,7 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 
+
 Builder.load_string('''
 <CameraClick>:
     orientation: 'vertical'
@@ -55,5 +56,4 @@ class TestCamera(App):
     def build(self):
         return CameraClick()
 
-if __name__ == '__main__':
-    TestCamera().run()
+TestCamera().run()
