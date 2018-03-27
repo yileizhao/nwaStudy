@@ -79,6 +79,7 @@ public class BaseController {
 				if (!map.containsKey(field)) { // 收获不存在
 					jsonBase.init(LangConst.baseHavestNotExisit);
 				} else { // 收获
+					// TODO redis收获记录过量，存到mysql
 					double harvest = (double) map.get(field);
 					userEntity.setCoinCity(userEntity.getCoinCity() + harvest);
 					userRepository.save(userEntity);
