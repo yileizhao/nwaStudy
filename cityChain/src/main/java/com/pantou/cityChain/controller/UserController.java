@@ -1,14 +1,11 @@
 package com.pantou.cityChain.controller;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSONObject;
 import com.pantou.cityChain.consts.GlobalConst;
 import com.pantou.cityChain.consts.LangConst;
 import com.pantou.cityChain.entity.UserEntity;
@@ -19,6 +16,9 @@ import com.pantou.cityChain.util.TimeUtil;
 import com.pantou.cityChain.util.ValidateUtil;
 import com.pantou.cityChain.vo.JsonBase;
 
+/*
+ * 用户控制器
+ */
 @RestController
 public class UserController {
 
@@ -144,33 +144,6 @@ public class UserController {
 				userEntity.setIdcard(idcard);
 				userRepository.save(userEntity);
 				userService.doLogin(jsonBase, userEntity);
-			}
-		} else { // 参数错误
-			jsonBase.init(LangConst.baseParamError);
-		}
-
-		return jsonBase;
-	}
-
-	/*
-	 * 基地
-	 */
-	@RequestMapping("/user/base")
-	public JsonBase base(@RequestParam String token) {
-		JsonBase jsonBase = new JsonBase();
-		if (!StringUtils.isEmpty(token)) {
-			UserEntity userEntity = userRepository.findByToken(token);
-			if (userEntity == null || StringUtils.isEmpty(userEntity.getName())) { // 基地未实名认证
-				jsonBase.init(LangConst.userBaseNotCertification);
-			} else { // 有效请求
-				long now = TimeUtil.now();
-				if(!TimeUtil.isSameDay(userEntity.getTimeBase(), now)) { // 每日登录，增加原力
-					userEntity.setTimeBase(now);
-					userRepository.save(userEntity);
-				}
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("nextRefTime", 60 - Integer.parseInt(TimeUtil.sdfYmdhms.format(new Date(now)).substring(17)));
-				jsonBase.setObject(jsonObject);
 			}
 		} else { // 参数错误
 			jsonBase.init(LangConst.baseParamError);

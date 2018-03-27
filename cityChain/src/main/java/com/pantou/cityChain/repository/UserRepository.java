@@ -18,9 +18,13 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
 	// 根据令牌查询
 	public UserEntity findByToken(String token);
 	
+	// 获取活跃用户总原力
+	@Query("select sum(power) from UserEntity ue where ue.timeBase > ?1")
+	public long queryActiveUserPowerTotal(long time);
+	
 	// 获取活跃用户
-	@Query("select ue from UserEntity ue where ue.timeBase > ?1")
-    public List<UserEntity> queryActiveUser(long time);
+	@Query("select ue.id, ue.power from UserEntity ue where ue.timeBase > ?1")
+    public List<Object> queryActiveUsers(long time);
 	
 	/*
 	 *  @Modifying
