@@ -1,9 +1,13 @@
 package com.pantou.cityChain.util;
 
+import java.util.UUID;
+
 public class GlobalUtil {
 
-	// 获取当前时间戳
-	public static long now() {
-		return System.currentTimeMillis();
+	/*
+	 * 获取uuid
+	 */
+	public static String getUuid() {
+		return UUID.randomUUID().toString();
 	}
 }

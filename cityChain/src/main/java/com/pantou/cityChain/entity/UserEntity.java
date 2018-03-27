@@ -14,13 +14,21 @@ public class UserEntity {
 
 	private String mobile; // 手机号
 	private String smsCode; // 短信验证码
-	private long smsCodeTime; // 短信验证码，最后发送时间
+	private long timeSmsCode; // 短信验证码，最后发送时间
 	private String inviteCode; // 邀请码
 	private int inviteCodeCnt; // 邀请码，已邀请的次数
 	private String nickname; // 昵称
+	private int power; // 原力值
 	private String name; // 姓名
 	private String idcard; // 身份证号码
-	private long idcardTime; // 身份证号码，最后校验时间
+	private long timeIdcard; // 身份证号码，最后校验时间
+
+	
+	private double coinCity; // city币
+	private double coinAtm; // 代币
+
+	private String token; // 令牌
+	private long timeBase; // 最后访问基地时间（日活跃）
 
 	public long getId() {
 		return id;
@@ -46,12 +54,12 @@ public class UserEntity {
 		this.smsCode = smsCode;
 	}
 
-	public long getSmsCodeTime() {
-		return smsCodeTime;
+	public long getTimeSmsCode() {
+		return timeSmsCode;
 	}
 
-	public void setSmsCodeTime(long smsCodeTime) {
-		this.smsCodeTime = smsCodeTime;
+	public void setTimeSmsCode(long timeSmsCode) {
+		this.timeSmsCode = timeSmsCode;
 	}
 
 	public String getInviteCode() {
@@ -78,6 +86,14 @@ public class UserEntity {
 		this.nickname = nickname;
 	}
 
+	public int getPower() {
+		return power;
+	}
+
+	public void setPower(int power) {
+		this.power = power;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -94,12 +110,43 @@ public class UserEntity {
 		this.idcard = idcard;
 	}
 
-	public long getIdcardTime() {
-		return idcardTime;
+	public long getTimeIdcard() {
+		return timeIdcard;
 	}
 
-	public void setIdcardTime(long idcardTime) {
-		this.idcardTime = idcardTime;
+	public void setTimeIdcard(long timeIdcard) {
+		this.timeIdcard = timeIdcard;
 	}
 
+	public double getCoinCity() {
+		return coinCity;
+	}
+
+	public void setCoinCity(double coinCity) {
+		this.coinCity = coinCity;
+	}
+
+	public double getCoinAtm() {
+		return coinAtm;
+	}
+
+	public void setCoinAtm(double coinAtm) {
+		this.coinAtm = coinAtm;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public long getTimeBase() {
+		return timeBase;
+	}
+
+	public void setTimeBase(long timeBase) {
+		this.timeBase = timeBase;
+	}
 }

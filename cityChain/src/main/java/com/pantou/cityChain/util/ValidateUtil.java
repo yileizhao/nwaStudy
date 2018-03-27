@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 import org.springframework.util.StringUtils;
 
+import com.pantou.cityChain.consts.GlobalConst;
+
 public class ValidateUtil {
 
 	/*
@@ -43,6 +45,6 @@ public class ValidateUtil {
 	 * 昵称验证
 	 */
 	public static boolean isNickName(final String str) {
-		return !StringUtils.isEmpty(str) && str.length() < ConstUtil.nicknameMax;
+		return !StringUtils.isEmpty(str) && str.length() < GlobalConst.nicknameMax;
 	}
 }
