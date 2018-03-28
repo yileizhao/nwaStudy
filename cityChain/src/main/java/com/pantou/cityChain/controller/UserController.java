@@ -45,11 +45,13 @@ public class UserController {
 			} else { // 登录
 				jsonBase.init(LangConst.userSmsCodeLogin);
 			}
-			if (TimeUtil.diff(userEntity.getTimeSmsCode(), TimeUtil.now()) < GlobalConst.smsCodeMin) { // 验证码时间错误
+			long diffTime = GlobalConst.smsCodeMin - TimeUtil.diff(userEntity.getTimeSmsCode(), TimeUtil.now());
+			if (diffTime > 0) { // 验证码时间错误
 				jsonBase.init(LangConst.userSmsSmsCodeTimeError);
-			} else {
+				jsonBase.setObject(diffTime);
+			} else { // 有效请求
 				// TODO 发送短信验证码
-				userEntity.setSmsCode("ABCDEF");
+				userEntity.setSmsCode(userService.produceSmsCode());
 				userEntity.setTimeSmsCode(TimeUtil.now());
 				userRepository.save(userEntity);
 			}
@@ -67,25 +69,45 @@ public class UserController {
 	public JsonBase register(@RequestParam String mobile, @RequestParam String smsCode, @RequestParam String inviteCode,
 			@RequestParam String nickname) {
 		JsonBase jsonBase = new JsonBase();
-		if (!StringUtils.isEmpty(mobile) && !StringUtils.isEmpty(smsCode) && !StringUtils.isEmpty(mobile)
-				&& !StringUtils.isEmpty(smsCode) && ValidateUtil.isMobile(mobile)
-				&& ValidateUtil.isNickName(nickname)) {
+		if (!StringUtils.isEmpty(mobile) && !StringUtils.isEmpty(smsCode) && !StringUtils.isEmpty(nickname)
+				&& ValidateUtil.isMobile(mobile) && ValidateUtil.isNickName(nickname)) {
 			UserEntity userEntity = userRepository.findByMobile(mobile);
 			if (userEntity == null || StringUtils.isEmpty(userEntity.getNickname())) { // 未注册
-				UserEntity userEntityInviteCode = userRepository.findByInviteCode(inviteCode);
-				if (!smsCode.equals(userEntity.getSmsCode())) { // 验证码错误
+				if (userEntity == null) {
+					userEntity = new UserEntity();
+					userEntity.setMobile(mobile);
+				}
+				if (!smsCode.equals(userEntity.getSmsCode())
+						|| TimeUtil.now() > userEntity.getTimeSmsCode() + GlobalConst.smsCodeMax) { // 验证码错误
 					jsonBase.init(LangConst.userRegisterSmsCodeError);
-				} else if (userEntityInviteCode == null
-						|| userEntityInviteCode.getInviteCodeCnt() > GlobalConst.inviteCodeMax) { // 邀请码错误
-					jsonBase.init(LangConst.userRegisterInviteCodeError);
-				} else { // 注册成功
-					userEntity.setInviteCode(inviteCode);
-					userEntity.setNickname(nickname);
-					userEntity.setPower(GlobalConst.powerInit);
-					userEntity.setToken(GlobalUtil.getUuid());
-					userRepository.save(userEntity);
-					jsonBase.init(LangConst.baseSuccess);
-					jsonBase.setObject(userEntity);
+				} else {
+					UserEntity userEntityNickname = userRepository.findByNickname(nickname);
+					if (userEntityNickname != null) {
+						jsonBase.init(LangConst.userRegisterNicknameExist);
+					} else { // 有效请求
+						userEntity.setInviteCode(userService.produceInviteCode());
+						userEntity.setNickname(nickname);
+						userEntity.setPower(GlobalConst.powerInit);
+						String token = GlobalUtil.getUuid();
+						userEntity.setToken(token);
+						userRepository.save(userEntity);
+
+						// 邀请人增加原力
+						if (!StringUtils.isEmpty(inviteCode)) {
+							UserEntity userEntityInviteCode = userRepository.findByInviteCode(inviteCode);
+							if (userEntityInviteCode != null) {
+								int inviteCodeCnt = userEntityInviteCode.getInviteCodeCnt();
+								if (inviteCodeCnt < GlobalConst.inviteCodeMax) {
+									userEntityInviteCode.setInviteCodeCnt(inviteCodeCnt + 1);
+									userEntityInviteCode
+											.setPower(userEntityInviteCode.getPower() + GlobalConst.inviteCodePower);
+									userRepository.save(userEntityInviteCode);
+								}
+							}
+						}
+						jsonBase.init(LangConst.baseSuccess);
+						jsonBase.setObject(token);
+					}
 				}
 			} else { // 已注册
 				jsonBase.init(LangConst.userRegisterRegister);
@@ -107,14 +129,15 @@ public class UserController {
 			UserEntity userEntity = userRepository.findByMobile(mobile);
 			if (userEntity == null || StringUtils.isEmpty(userEntity.getNickname())) { // 未注册
 				jsonBase.init(LangConst.userLoginNotRegister);
-			} else if (!smsCode.equals(userEntity.getSmsCode())) { // 验证码错误
+			} else if (!smsCode.equals(userEntity.getSmsCode())
+					|| TimeUtil.now() > userEntity.getTimeSmsCode() + GlobalConst.smsCodeMax) { // 验证码错误
 				jsonBase.init(LangConst.userLoginSmsCodeError);
-			} else if (StringUtils.isEmpty(userEntity.getName())) { // 实名认证错误
-				jsonBase.init(LangConst.userLoginNotCertification);
-			} else { // 登录成功
-				userEntity.setToken(GlobalUtil.getUuid());
+			} else { // 有效请求
+				String token = GlobalUtil.getUuid();
+				userEntity.setToken(token);
 				userRepository.save(userEntity);
-				userService.doLogin(jsonBase, userEntity);
+				jsonBase.init(LangConst.baseSuccess);
+				jsonBase.setObject(token);
 			}
 		} else { // 参数错误
 			jsonBase.init(LangConst.baseParamError);
@@ -137,13 +160,14 @@ public class UserController {
 				jsonBase.init(LangConst.userCertificationCertification);
 			} else if (TimeUtil.diff(userEntity.getTimeIdcard(), TimeUtil.now()) < GlobalConst.idcardMin) { // 实名认证时间错误
 				jsonBase.init(LangConst.userCertificationCertification);
-			} else if (Math.random() > 0.5) { // TODO 实名认证错误
+			} else if (Math.random() > 1.0) { // TODO 实名认证错误
 				jsonBase.init(LangConst.userCertificationNotCertification);
-			} else { // 实名认证成功
+			} else { // 有效请求
 				userEntity.setName(name);
 				userEntity.setIdcard(idcard);
+				userEntity.setPower(userEntity.getPower() + GlobalConst.idcardPower);
 				userRepository.save(userEntity);
-				userService.doLogin(jsonBase, userEntity);
+				jsonBase.init(LangConst.baseSuccess);
 			}
 		} else { // 参数错误
 			jsonBase.init(LangConst.baseParamError);

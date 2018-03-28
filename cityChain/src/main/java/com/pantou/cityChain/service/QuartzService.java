@@ -29,7 +29,8 @@ public class QuartzService {
 		// TODO 宕机补差
 		long now = TimeUtil.now();
 		long time = now - GlobalConst.baseCityCoinAddTime;
-		long powerTotal = userRepository.queryActiveUserPowerTotal(time);
+		Long powerTotalObject = userRepository.queryActiveUserPowerTotal(time);
+		long powerTotal = powerTotalObject == null ? 0 : powerTotalObject;
 		List<Object> objects = userRepository.queryActiveUsers(time);
 		double totalAdd = 0;
 		if (powerTotal > 0) {

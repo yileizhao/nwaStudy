@@ -25,13 +25,12 @@ sourceCompatibility = 1.9
 targetCompatibility = 1.9
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-    
+
+    // 高级组件会自动引用基础组件，websocket就引入了spring-boot-starter-web和spring-boot-starter，所以不要重复引入spring-boot-starter-web
+    compile("org.springframework.boot:spring-boot-starter-websocket")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile("mysql:mysql-connector-java")
-    
     compile("org.springframework.boot:spring-boot-starter-data-redis")
-    
+    compile("mysql:mysql-connector-java")
     compile("com.alibaba:fastjson:1.2.46")
     
     runtime group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'

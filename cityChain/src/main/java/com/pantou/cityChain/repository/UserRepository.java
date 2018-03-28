@@ -12,15 +12,18 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
 	// 根据手机号查询，方法名要以findBy+字段名来命名
 	public UserEntity findByMobile(String mobile);
 	
+	// 根据昵称查询
+	public UserEntity findByNickname(String nickname);
+	
 	// 根据邀请码查询
 	public UserEntity findByInviteCode(String inviteCode);
 	
 	// 根据令牌查询
 	public UserEntity findByToken(String token);
 	
-	// 获取活跃用户总原力
+	// 获取活跃用户总原力，无用户时返回null
 	@Query("select sum(power) from UserEntity ue where ue.timeBase > ?1")
-	public long queryActiveUserPowerTotal(long time);
+	public Long queryActiveUserPowerTotal(long time);
 	
 	// 获取活跃用户
 	@Query("select ue.id, ue.power from UserEntity ue where ue.timeBase > ?1")
