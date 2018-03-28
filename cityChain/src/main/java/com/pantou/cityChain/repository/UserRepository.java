@@ -32,9 +32,4 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
 	@Query("select ue.id, ue.power from UserEntity ue where ue.timeBase > ?1")
     public List<Object> queryActiveUsers(long time);
 	
-	/*
-	 *  @Modifying
-		@Query("update Person set email = :email where lastName =:lastName")
-		void updatePersonEmailByLastName(@Param("lastName")String lastName,@Param("email")String email);
-	 */
 }

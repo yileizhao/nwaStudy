@@ -26,6 +26,10 @@ public class HistoryEntity {
 	private TypeEnum type;
 	private PlusMinusEnum plusMinus;
 
+	public HistoryEntity() {
+		super();
+	}
+
 	public HistoryEntity(long userId, long time, double cnt, CoinEnum coin, TypeEnum type, PlusMinusEnum plusMinus) {
 		super();
 		this.userId = userId;

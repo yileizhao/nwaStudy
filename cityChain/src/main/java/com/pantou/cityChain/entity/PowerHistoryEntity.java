@@ -22,6 +22,10 @@ public class PowerHistoryEntity {
 	private int cnt; // 数量
 	private PowerEnum power;
 
+	public PowerHistoryEntity() {
+		super();
+	}
+
 	public PowerHistoryEntity(long userId, long time, int cnt, PowerEnum power) {
 		super();
 		this.userId = userId;

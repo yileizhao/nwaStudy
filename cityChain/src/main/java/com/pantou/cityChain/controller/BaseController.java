@@ -3,11 +3,7 @@ package com.pantou.cityChain.controller;
 import java.util.Date;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,8 +23,10 @@ import com.pantou.cityChain.repository.HistoryRepository;
 import com.pantou.cityChain.repository.PowerHistoryRepository;
 import com.pantou.cityChain.repository.RedisRepository;
 import com.pantou.cityChain.repository.UserRepository;
+import com.pantou.cityChain.service.UserService;
 import com.pantou.cityChain.util.TimeUtil;
 import com.pantou.cityChain.vo.JsonBase;
+import com.pantou.cityChain.vo.TwoTuple;
 
 /*
  * 基地控制器
@@ -45,11 +43,11 @@ public class BaseController {
 	@Autowired
 	private HistoryRepository historyRepository;
 
-	@PersistenceContext
-	private EntityManager entityManager;
-
 	@Autowired
 	private PowerHistoryRepository powerHistoryRepository;
+
+	@Autowired
+	private UserService userService;
 
 	/*
 	 * 主页
@@ -123,9 +121,8 @@ public class BaseController {
 	}
 
 	/*
-	 * 收获记录
+	 * 币收获记录
 	 */
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/base/history")
 	public JsonBase history(@RequestParam String token, @RequestParam int coin, @RequestParam int type,
 			@RequestParam int plusMinus, @RequestParam int page) {
@@ -136,9 +133,46 @@ public class BaseController {
 				jsonBase.init(LangConst.baseToken);
 			} else { // 有效请求
 				jsonBase.init(LangConst.baseSuccess);
-				jsonBase.setObject(historyRepository.getByCoinAndTypeAndPlusMinus(CoinEnum.values()[coin],
-						TypeEnum.values()[type], PlusMinusEnum.values()[plusMinus],
-						new PageRequest(page < 0 ? 0 : page, GlobalConst.coinHisotoryPageSize)));
+
+				String sql = "select he from HistoryEntity he where he.userId = " + userEntity.getId();
+				if (coin >= 0 && coin < CoinEnum.values().length) {
+					sql += " and phe.coin = " + coin;
+				}
+				if (type >= 0 && type < TypeEnum.values().length) {
+					sql += " and phe.type = " + type;
+				}
+				if (plusMinus >= 0 && plusMinus < PlusMinusEnum.values().length) {
+					sql += " and phe.plusMinus = " + plusMinus;
+				}
+				jsonBase.setObject(userService.findBysql(PowerHistoryEntity.class, sql,
+						new TwoTuple<Integer, Integer>(page < 0 ? 0 : page, GlobalConst.coinHisotoryPageSize)));
+			}
+		} else { // 参数错误
+			jsonBase.init(LangConst.baseParamError);
+		}
+
+		return jsonBase;
+	}
+
+	/*
+	 * 原力收获记录
+	 */
+	@RequestMapping("/base/powerHistory")
+	public JsonBase powerHistory(@RequestParam String token, @RequestParam int power, @RequestParam int page) {
+		JsonBase jsonBase = new JsonBase();
+		if (!StringUtils.isEmpty(token)) {
+			UserEntity userEntity = userRepository.findByToken(token);
+			if (userEntity == null) { // 令牌错误
+				jsonBase.init(LangConst.baseToken);
+			} else { // 有效请求
+				jsonBase.init(LangConst.baseSuccess);
+
+				String sql = "select phe from PowerHistoryEntity phe where phe.userId = " + userEntity.getId();
+				if (power >= 0 && power < PowerEnum.values().length) {
+					sql += " and phe.power = " + power;
+				}
+				jsonBase.setObject(userService.findBysql(PowerHistoryEntity.class, sql,
+						new TwoTuple<Integer, Integer>(page < 0 ? 0 : page, GlobalConst.coinHisotoryPageSize)));
 			}
 		} else { // 参数错误
 			jsonBase.init(LangConst.baseParamError);
