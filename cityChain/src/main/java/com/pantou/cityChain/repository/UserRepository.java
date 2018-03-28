@@ -7,6 +7,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.pantou.cityChain.entity.UserEntity;
 
+/**
+ * 用户仓库
+ */
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
 	// 根据手机号查询，方法名要以findBy+字段名来命名

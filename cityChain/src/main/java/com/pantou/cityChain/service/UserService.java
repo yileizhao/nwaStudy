@@ -8,6 +8,9 @@ import com.pantou.cityChain.consts.GlobalConst;
 import com.pantou.cityChain.repository.UserRepository;
 import com.pantou.cityChain.util.GlobalUtil;
 
+/*
+ * 用户服务
+ */
 @Service
 public class UserService {
 

@@ -12,6 +12,9 @@ import com.pantou.cityChain.repository.RedisRepository;
 import com.pantou.cityChain.repository.UserRepository;
 import com.pantou.cityChain.util.TimeUtil;
 
+/*
+ * 定时器服务
+ */
 @Component
 public class QuartzService {
 

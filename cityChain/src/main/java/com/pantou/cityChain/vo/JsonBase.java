@@ -1,5 +1,8 @@
 package com.pantou.cityChain.vo;
 
+/**
+ * 接口返回基础信息
+ */
 public class JsonBase {
 
 	private int code; // 返回码

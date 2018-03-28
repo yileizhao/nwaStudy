@@ -3,6 +3,9 @@ package com.pantou.cityChain.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 时间工具类
+ */
 public class TimeUtil {
 
 	public static SimpleDateFormat sdfYmdhms = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

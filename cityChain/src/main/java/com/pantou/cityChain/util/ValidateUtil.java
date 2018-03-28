@@ -7,6 +7,9 @@ import org.springframework.util.StringUtils;
 
 import com.pantou.cityChain.consts.GlobalConst;
 
+/**
+ * 校验工具类
+ */
 public class ValidateUtil {
 
 	/*

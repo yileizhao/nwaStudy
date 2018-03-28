@@ -9,6 +9,9 @@ import com.pantou.cityChain.consts.CoinEnum;
 import com.pantou.cityChain.consts.PlusMinusEnum;
 import com.pantou.cityChain.consts.TypeEnum;
 
+/*
+ * 币历史记录实体
+ */
 @Entity
 public class HistoryEntity {
 
@@ -16,11 +19,22 @@ public class HistoryEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	private long userId; // 用户id
 	private long time; // 创建时间
-	private double cnt; // 数量：正数-收获 负数-消耗
+	private double cnt; // 数量
 	private CoinEnum coin;
 	private TypeEnum type;
 	private PlusMinusEnum plusMinus;
+
+	public HistoryEntity(long userId, long time, double cnt, CoinEnum coin, TypeEnum type, PlusMinusEnum plusMinus) {
+		super();
+		this.userId = userId;
+		this.time = time;
+		this.cnt = cnt;
+		this.coin = coin;
+		this.type = type;
+		this.plusMinus = plusMinus;
+	}
 
 	public long getId() {
 		return id;
@@ -28,6 +42,14 @@ public class HistoryEntity {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public long getTime() {

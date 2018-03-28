@@ -3,12 +3,11 @@ package com.pantou.cityChain.controller;
 import java.util.Date;
 import java.util.Map;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,10 +18,13 @@ import com.pantou.cityChain.consts.CoinEnum;
 import com.pantou.cityChain.consts.GlobalConst;
 import com.pantou.cityChain.consts.LangConst;
 import com.pantou.cityChain.consts.PlusMinusEnum;
+import com.pantou.cityChain.consts.PowerEnum;
 import com.pantou.cityChain.consts.TypeEnum;
 import com.pantou.cityChain.entity.HistoryEntity;
+import com.pantou.cityChain.entity.PowerHistoryEntity;
 import com.pantou.cityChain.entity.UserEntity;
 import com.pantou.cityChain.repository.HistoryRepository;
+import com.pantou.cityChain.repository.PowerHistoryRepository;
 import com.pantou.cityChain.repository.RedisRepository;
 import com.pantou.cityChain.repository.UserRepository;
 import com.pantou.cityChain.util.TimeUtil;
@@ -42,9 +44,12 @@ public class BaseController {
 
 	@Autowired
 	private HistoryRepository historyRepository;
-	
-	@PersistenceContext  
-    private EntityManager entityManager; 
+
+	@PersistenceContext
+	private EntityManager entityManager;
+
+	@Autowired
+	private PowerHistoryRepository powerHistoryRepository;
 
 	/*
 	 * 主页
@@ -60,7 +65,10 @@ public class BaseController {
 				long now = TimeUtil.now();
 				if (!TimeUtil.isSameDay(userEntity.getTimeBase(), now)) { // 每日登录，增加原力
 					userEntity.setTimeBase(now);
+					userEntity.setPower(userEntity.getPower() + GlobalConst.loginPower);
 					userRepository.save(userEntity);
+					powerHistoryRepository.save(new PowerHistoryEntity(userEntity.getId(), now, GlobalConst.loginPower,
+							PowerEnum.DayLogin));
 				}
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("coins", redisRepository.getMapAll(GlobalConst.redisMapCoinHavest + userEntity.getId()));
@@ -98,14 +106,8 @@ public class BaseController {
 					userEntity.setCoinCity(userEntity.getCoinCity() + harvest);
 					userRepository.save(userEntity);
 					redisRepository.delMapField(key, coinKey);
-
-					HistoryEntity historyEntity = new HistoryEntity();
-					historyEntity.setCnt(harvest);
-					historyEntity.setTime(TimeUtil.now());
-					historyEntity.setCoin(CoinEnum.CoinCity);
-					historyEntity.setType(TypeEnum.Reward);
-					historyEntity.setPlusMinus(PlusMinusEnum.Plus);
-					historyRepository.save(historyEntity);
+					historyRepository.save(new HistoryEntity(id, TimeUtil.now(), harvest, CoinEnum.CoinCity,
+							TypeEnum.Reward, PlusMinusEnum.Plus));
 
 					JSONObject jsonObject = new JSONObject();
 					jsonObject.put("coinKey", coinKey);
@@ -123,6 +125,7 @@ public class BaseController {
 	/*
 	 * 收获记录
 	 */
+	@SuppressWarnings("deprecation")
 	@RequestMapping("/base/history")
 	public JsonBase history(@RequestParam String token, @RequestParam int coin, @RequestParam int type,
 			@RequestParam int plusMinus, @RequestParam int page) {
@@ -133,14 +136,9 @@ public class BaseController {
 				jsonBase.init(LangConst.baseToken);
 			} else { // 有效请求
 				jsonBase.init(LangConst.baseSuccess);
-				
-				Query query = entityManager.createQuery("select he from HistoryEntity he where he.coin = ?1 and he.type = ?2 and he.plusMinus = ?3");  
-		        query.setParameter("codeUrl", codeUrl);  
-		        return (Entity) query.setMaxResults(1).getSingleResult();// 仅返回一条记录  
-		                // query.setMaxResults(5).getResultList(); // 返回多条
-				
-				jsonBase.setObject(historyRepository.queryByChoice(coin, type, plusMinus,
-						(page < 0 ? 0 : page) * GlobalConst.coinHisotoryPageSize, GlobalConst.coinHisotoryPageSize));
+				jsonBase.setObject(historyRepository.getByCoinAndTypeAndPlusMinus(CoinEnum.values()[coin],
+						TypeEnum.values()[type], PlusMinusEnum.values()[plusMinus],
+						new PageRequest(page < 0 ? 0 : page, GlobalConst.coinHisotoryPageSize)));
 			}
 		} else { // 参数错误
 			jsonBase.init(LangConst.baseParamError);

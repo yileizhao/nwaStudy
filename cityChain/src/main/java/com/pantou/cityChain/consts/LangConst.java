@@ -2,6 +2,9 @@ package com.pantou.cityChain.consts;
 
 import com.pantou.cityChain.vo.TwoTuple;
 
+/**
+ * 多语言支持
+ */
 public class LangConst {
 
 	public static TwoTuple<Integer, String> baseSuccess = new TwoTuple<Integer, String>(10000, "成功！");

@@ -12,6 +12,9 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.stereotype.Component;
 
+/*
+ * 网页长连接服务
+ */
 @ServerEndpoint(value = "/websocket")
 @Component
 public class WebSocketService {

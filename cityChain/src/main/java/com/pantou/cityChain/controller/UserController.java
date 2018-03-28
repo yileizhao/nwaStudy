@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pantou.cityChain.consts.GlobalConst;
 import com.pantou.cityChain.consts.LangConst;
+import com.pantou.cityChain.consts.PowerEnum;
+import com.pantou.cityChain.entity.PowerHistoryEntity;
 import com.pantou.cityChain.entity.UserEntity;
+import com.pantou.cityChain.repository.PowerHistoryRepository;
 import com.pantou.cityChain.repository.UserRepository;
 import com.pantou.cityChain.service.UserService;
 import com.pantou.cityChain.util.GlobalUtil;
@@ -27,6 +30,9 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private PowerHistoryRepository powerHistoryRepository;
 
 	/*
 	 * 验证码（注册、登录）
@@ -88,6 +94,9 @@ public class UserController {
 						userEntity.setInviteCode(userService.produceInviteCode());
 						userEntity.setNickname(nickname);
 						userEntity.setPower(GlobalConst.powerInit);
+						long now = TimeUtil.now();
+						powerHistoryRepository.save(new PowerHistoryEntity(userEntity.getId(), now,
+								GlobalConst.powerInit, PowerEnum.Register));
 						String token = GlobalUtil.getUuid();
 						userEntity.setToken(token);
 						userRepository.save(userEntity);
@@ -102,6 +111,8 @@ public class UserController {
 									userEntityInviteCode
 											.setPower(userEntityInviteCode.getPower() + GlobalConst.inviteCodePower);
 									userRepository.save(userEntityInviteCode);
+									powerHistoryRepository.save(new PowerHistoryEntity(userEntityInviteCode.getId(),
+											now, GlobalConst.powerInit, PowerEnum.Register));
 								}
 							}
 						}
@@ -167,6 +178,8 @@ public class UserController {
 				userEntity.setIdcard(idcard);
 				userEntity.setPower(userEntity.getPower() + GlobalConst.idcardPower);
 				userRepository.save(userEntity);
+				powerHistoryRepository.save(new PowerHistoryEntity(userEntity.getId(), TimeUtil.now(),
+						GlobalConst.idcardPower, PowerEnum.Certification));
 				jsonBase.init(LangConst.baseSuccess);
 			}
 		} else { // 参数错误

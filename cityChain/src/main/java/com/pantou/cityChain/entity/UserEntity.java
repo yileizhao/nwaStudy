@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/*
+ * 用户历史记录实体
+ */
 @Entity
 public class UserEntity {
 
