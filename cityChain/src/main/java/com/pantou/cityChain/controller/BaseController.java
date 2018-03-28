@@ -136,13 +136,13 @@ public class BaseController {
 
 				String sql = "select he from HistoryEntity he where he.userId = " + userEntity.getId();
 				if (coin >= 0 && coin < CoinEnum.values().length) {
-					sql += " and phe.coin = " + coin;
+					sql += " and he.coin = " + coin;
 				}
 				if (type >= 0 && type < TypeEnum.values().length) {
-					sql += " and phe.type = " + type;
+					sql += " and he.type = " + type;
 				}
 				if (plusMinus >= 0 && plusMinus < PlusMinusEnum.values().length) {
-					sql += " and phe.plusMinus = " + plusMinus;
+					sql += " and he.plusMinus = " + plusMinus;
 				}
 				jsonBase.setObject(userService.findBysql(PowerHistoryEntity.class, sql,
 						new TwoTuple<Integer, Integer>(page < 0 ? 0 : page, GlobalConst.coinHisotoryPageSize)));
