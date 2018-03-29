@@ -34,7 +34,7 @@ public class QuartzService {
 		long time = now - GlobalConst.baseCityCoinAddTime;
 		Long powerTotalObject = userRepository.queryActiveUserPowerTotal(time);
 		// TODO 上线前改为0
-		double powerTotal = (powerTotalObject == null ? 0 : powerTotalObject) + 2000;
+		double powerTotal = (powerTotalObject == null ? 0 : powerTotalObject);
 		List<Object> objects = userRepository.queryActiveUsers(time);
 		double totalAdd = 0;
 		if (powerTotal > 0) {

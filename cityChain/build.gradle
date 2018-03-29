@@ -33,6 +33,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-freemarker")
     compile("mysql:mysql-connector-java")
     compile("com.alibaba:fastjson:1.2.46")
+    compile("com.arronlong:httpclientutil:1.0")
     
     runtime group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
 }

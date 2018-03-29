@@ -62,12 +62,13 @@ public class BaseController {
 			} else { // 有效请求
 				long now = TimeUtil.now();
 				if (!TimeUtil.isSameDay(userEntity.getTimeBase(), now)) { // 每日登录，增加原力
-					userEntity.setTimeBase(now);
 					userEntity.setPower(userEntity.getPower() + GlobalConst.loginPower);
-					userRepository.save(userEntity);
 					powerHistoryRepository.save(new PowerHistoryEntity(userEntity.getId(), now, GlobalConst.loginPower,
 							PowerEnum.DayLogin));
 				}
+				userEntity.setTimeBase(now);
+				userRepository.save(userEntity);
+				
 				JSONObject jsonObject = new JSONObject();
 				jsonObject.put("coins", redisRepository.getMapAll(GlobalConst.redisMapCoinHarvest + userEntity.getId()));
 				jsonObject.put("nextRefTime",

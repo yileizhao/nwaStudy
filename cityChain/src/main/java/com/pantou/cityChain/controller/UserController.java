@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
+import com.arronlong.httpclientutil.HttpClientUtil;
+import com.arronlong.httpclientutil.common.HttpConfig;
 import com.pantou.cityChain.consts.GlobalConst;
 import com.pantou.cityChain.consts.LangConst;
 import com.pantou.cityChain.consts.PowerEnum;
@@ -33,6 +36,70 @@ public class UserController {
 
 	@Autowired
 	private PowerHistoryRepository powerHistoryRepository;
+
+	/*
+	 * 注册机器人
+	 */
+	@RequestMapping("/user/robot")
+	public JsonBase smsCode(@RequestParam(name = "cnt", required = false, defaultValue = "1") int cnt) {
+		int maxCnt = 10000;
+		cnt = Math.min(cnt, maxCnt);
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < cnt; i++) {
+			int endfix = maxCnt + i;
+			try {
+				String mobile = "177253" + endfix;
+				System.out.println(
+						HttpClientUtil.get(HttpConfig.custom().url("http://localhost/user/smsCode?mobile=" + mobile)));
+				Thread.sleep(10);
+
+				System.out.println(HttpClientUtil.get(HttpConfig.custom().url("http://localhost/user/register?mobile="
+						+ mobile + "&smsCode=123456&nickname=zyl" + i + "&inviteCode=")));
+				Thread.sleep(10);
+
+				String str = HttpClientUtil.get(
+						HttpConfig.custom().url("http://localhost/user/login?mobile=" + mobile + "&smsCode=123456"));
+				System.out.println(str);
+				String token = JSONObject.parseObject(str).getString("object");
+				Thread.sleep(10);
+
+				str = HttpClientUtil.get(HttpConfig.custom().url("http://localhost/user/certification?token=" + token
+						+ "&name=赵亦磊" + endfix + "&idcard=13053519851014" + endfix));
+				System.out.println(str);
+				Thread.sleep(10);
+
+				str = HttpClientUtil.get(HttpConfig.custom().url("http://localhost/base/main?token=" + token));
+				System.out.println(str);
+				Thread.sleep(10);
+
+				JSONObject jsonObjectCoins = JSONObject.parseObject(str).getJSONObject("object").getJSONObject("coins");
+				if (jsonObjectCoins != null) {
+					for (String coinKey : jsonObjectCoins.keySet()) {
+						System.out.println(HttpClientUtil.get(HttpConfig.custom()
+								.url("http://localhost/base/harvest?token=" + token + "&coinKey=" + coinKey)));
+					}
+				}
+				Thread.sleep(10);
+
+				System.out.println(HttpClientUtil.get(HttpConfig.custom()
+						.url("http://localhost/base/history?token=" + token + "&coin=0&type=0&plusMinus=0&page=0")));
+				Thread.sleep(10);
+
+				System.out.println(HttpClientUtil.get(HttpConfig.custom()
+						.url("http://localhost/base/powerHistory?token=" + token + "&power=0&page=0")));
+				Thread.sleep(10);
+
+				jsonObject.put("token", token);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		JsonBase jsonBase = new JsonBase();
+		jsonBase.init(LangConst.baseSuccess);
+		jsonBase.setObject(jsonObject);
+
+		return jsonBase;
+	}
 
 	/*
 	 * 验证码（注册、登录）

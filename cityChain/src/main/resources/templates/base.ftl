@@ -7,6 +7,30 @@
 	content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
 <meta content="telephone=no" name="format-detection">
 <title>星球</title>
+<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var intDiff = ${nextRefTime}; //倒计时总秒数
+		window.setInterval(function(){
+		    intDiff--;
+		    if (intDiff == 0 && $(".popo-tip").length) {
+		    	window.location.reload();
+		    }
+	    }, 1000);
+		if ($(".popo-tip").length < ${popXysPage}) {
+			if (popLen == 0) {
+				$(".popo").append("<div data-v-0f719103='' class='lian updown' style='top: 1.5rem; left: 3.22rem;' id='div-1' onclick=''> <div data-v-0f719103='' class='popo-tip'>正在生长中</div></div>");
+			}
+		    
+		}
+	});
+	
+	function harvest(divId) {
+		htmlobj=$.ajax({url:"/base/harvest?token=${token}&coinKey=" + divId,async:false});
+		$("#div" + divId).remove();
+		window.location.reload();
+	}
+</script>
 <script type="text/javascript" async=""
 	src="./星球_files/DATracker.globals.1.4.0.js.下载"></script>
 <script>window.NRUM=window.NRUM||{},window.NRUM.config={key:"32fe9c8395ba4b4195f6a845504d4aa5",clientStart:+new Date},function(){var e=document.getElementsByTagName("script")[0],n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src="//nos.netease.com/apmsdk/napm-web-min-1.1.5.js","DEPLOY_ENV_FOR_FE"=="online"&&setTimeout(function(){e.parentNode.insertBefore(n,e)})}();</script>
@@ -82,10 +106,11 @@
 				</div>
 				<div data-v-0f719103="" class="popo">
 					<#list coins as item>
-						<div data-v-0f719103="" class="lian updown"
-							style="top: ${item.third}rem; left: ${item.fourd}rem;">
-							<div data-v-0f719103="" class="popo-tip">${item.second}</div>
-						</div>
+					<div data-v-0f719103="" class="lian updown"
+						style="top: ${item.fourd}rem; left: ${item.third}rem;" id="div${item.first}"
+						onclick="harvest(${item.first})">
+						<div data-v-0f719103="" class="popo-tip">${item.second}</div>
+					</div>
 					</#list>
 				</div>
 				<div data-v-0f719103="" class="btn-group">
@@ -152,10 +177,10 @@
 									<tbody data-v-88de3002="">
 										<#list history as item>
 										<tr data-v-88de3002="">
-											<td data-v-88de3002="" class="nickname center">${item.time}</td>
-											<td data-v-88de3002="" class="nickname center">${item.coin}</td>
-											<td data-v-88de3002="" class="nickname center">${item.type}</td>
-											<td data-v-88de3002="" class="nickname center">${item.plusMinus}</td>
+											<td data-v-88de3002="" class="nickname center">${item.time?number_to_datetime}</td>
+											<td data-v-88de3002="" class="nickname center">${item.coin.value}</td>
+											<td data-v-88de3002="" class="nickname center">${item.type.value}</td>
+											<td data-v-88de3002="" class="nickname center">${item.plusMinus.value}</td>
 											<td data-v-88de3002="" class="nickname center">${item.cnt}</td>
 										</tr>
 										</#list>

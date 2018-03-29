@@ -104,7 +104,7 @@
 									<#list powerHistory as item>
 										<tr data-v-88de3002="">
 											<td data-v-88de3002="" class="nickname center">${item.time}</td>
-											<td data-v-88de3002="" class="nickname center">${item.power}</td>
+											<td data-v-88de3002="" class="nickname center">${item.power.value}</td>
 											<td data-v-88de3002="" class="nickname center">+${item.cnt}</td>
 										</tr>
 									</#list>

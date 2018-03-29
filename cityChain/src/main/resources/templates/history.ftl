@@ -111,9 +111,9 @@
 									<#list history as item>
 									<tr data-v-88de3002="">
 										<td data-v-88de3002="" class="nickname center">${item.time}</td>
-										<td data-v-88de3002="" class="nickname center">${item.coin}</td>
-										<td data-v-88de3002="" class="nickname center">${item.type}</td>
-										<td data-v-88de3002="" class="nickname center">${item.plusMinus}</td>
+										<td data-v-88de3002="" class="nickname center">${item.coin.value}</td>
+										<td data-v-88de3002="" class="nickname center">${item.type.value}</td>
+										<td data-v-88de3002="" class="nickname center">${item.plusMinus.value}</td>
 										<td data-v-88de3002="" class="nickname center">${item.cnt}</td>
 									</tr>
 									</#list>

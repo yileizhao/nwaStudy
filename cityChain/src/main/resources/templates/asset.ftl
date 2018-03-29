@@ -109,8 +109,8 @@
 							<table data-v-88de3002="">
 								<tbody data-v-88de3002="">
 									<#list coins as item>
-									<tr data-v-88de3002="" onclick="window.open('assetIntro?coin=${item.first}&cnt=${item.second}', '_self')">
-										<td data-v-88de3002="" class="nickname center">${item.first}</td>
+									<tr data-v-88de3002="" onclick="window.open('assetIntro?coin=${item.first.value}&cnt=${item.second}', '_self')">
+										<td data-v-88de3002="" class="nickname center">${item.first.value}</td>
 										<td data-v-88de3002="" class="nickname center">${item.second}</td>
 									</tr>
 									</#list>

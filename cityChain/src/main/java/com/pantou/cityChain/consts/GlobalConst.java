@@ -32,15 +32,19 @@ public class GlobalConst {
 	public static int baseCityCoinMax = 48; // city币最多未收取48次
 	public static int coinHisotoryPageSize = 3; // city币收获记录分页条数
 
-	@SuppressWarnings({ "serial", "deprecation" })
-	public static List<TwoTuple<Float, Float>> popXys = new ArrayList<TwoTuple<Float, Float>>() {
+	public static int popXysPage = 12; // 钻石排布单页最多12个
+	public static double popXysX = 1.2f; // 钻石排布坐标宽
+	public static double popXysY = 1.4f; // 钻石排布坐标高
+	public static List<TwoTuple<Double, Double>> popXys = new ArrayList<TwoTuple<Double, Double>>() { // 钻石排布坐标列表
+		private static final long serialVersionUID = -3209528440754459108L;
 		{
 			// 宽：1.2rem 高：1.4rem
-			for (int i = 0; i < 8; i++) {
-				for (int j = 0; j < 5; j++) {
-					add(new TwoTuple<Float, Float>(new Float(i * 1.2), new Float(j * 1.4)));
+			for (int i = 0; i < 5; i++) {
+				for (int j = 0; j < 3; j++) {
+					add(new TwoTuple<Double, Double>((i + 0.5) * popXysX, (j + 0.5) * popXysY));
 				}
 			}
 		}
 	};
+	public static int popXysLen = popXys.size(); // 钻石排布坐标列表长度
 }

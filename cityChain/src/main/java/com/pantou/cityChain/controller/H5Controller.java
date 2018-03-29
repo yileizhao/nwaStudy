@@ -2,9 +2,11 @@ package com.pantou.cityChain.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ import com.pantou.cityChain.entity.UserEntity;
 import com.pantou.cityChain.repository.RedisRepository;
 import com.pantou.cityChain.repository.UserRepository;
 import com.pantou.cityChain.service.UserService;
+import com.pantou.cityChain.util.GlobalUtil;
 import com.pantou.cityChain.util.TimeUtil;
 import com.pantou.cityChain.vo.FourTuple;
 import com.pantou.cityChain.vo.JsonBase;
@@ -83,16 +86,28 @@ public class H5Controller {
 
 				map.put("token", token);
 				map.put("power", userEntity.getPower());
-				List<FourTuple<String, Double, Float, Float>> coins = new ArrayList<FourTuple<String, Double, Float, Float>>();
+				List<FourTuple<String, Double, Double, Double>> coins = new ArrayList<FourTuple<String, Double, Double, Double>>();
 				String sql = "select he from HistoryEntity he";
 				map.put("history", userService.findBysql(HistoryEntity.class, sql,
 						new TwoTuple<Integer, Integer>(0, GlobalConst.coinHisotoryPageSize)));
-				int index = 0;
+				map.put("popXysPage", GlobalConst.popXysPage);
+				Set<Integer> indexSet = new HashSet<Integer>();
 				for (Entry<String, Object> entry : redisRepository
 						.getMapAll(GlobalConst.redisMapCoinHarvest + userEntity.getId()).entrySet()) {
-					TwoTuple<Float, Float> twoTuple = GlobalConst.popXys.get(index++);
-					coins.add(new FourTuple<String, Double, Float, Float>(entry.getKey(), (Double) entry.getValue(),
-							twoTuple.first, twoTuple.second));
+					if (indexSet.size() >= GlobalConst.popXysPage) {
+						break;
+					}
+					int index = GlobalUtil.random.nextInt(GlobalConst.popXysLen);
+					while (indexSet.contains(index)) {
+						index = GlobalUtil.random.nextInt(GlobalConst.popXysLen);
+					}
+					TwoTuple<Double, Double> twoTuple = GlobalConst.popXys.get(index);
+					coins.add(new FourTuple<String, Double, Double, Double>(entry.getKey(), (Double) entry.getValue(),
+							twoTuple.first + (GlobalUtil.random.nextInt(1) == 0 ? -1 : 1) * Math.random()
+									* GlobalConst.popXysX / 2,
+							twoTuple.second + (GlobalUtil.random.nextInt(1) == 0 ? -1 : 1) * Math.random()
+									* GlobalConst.popXysY / 2));
+					indexSet.add(index);
 				}
 				map.put("coins", coins);
 				map.put("nextRefTime",
