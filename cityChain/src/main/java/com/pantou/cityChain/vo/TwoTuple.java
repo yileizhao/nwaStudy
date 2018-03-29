@@ -18,4 +18,12 @@ public class TwoTuple<A, B> {
 		this.first = a;
 		this.second = b;
 	}
+
+	public A getFirst() {
+		return first;
+	}
+
+	public B getSecond() {
+		return second;
+	}
 }

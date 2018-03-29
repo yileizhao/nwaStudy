@@ -69,7 +69,7 @@ public class BaseController {
 							PowerEnum.DayLogin));
 				}
 				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("coins", redisRepository.getMapAll(GlobalConst.redisMapCoinHavest + userEntity.getId()));
+				jsonObject.put("coins", redisRepository.getMapAll(GlobalConst.redisMapCoinHarvest + userEntity.getId()));
 				jsonObject.put("nextRefTime",
 						60 - Integer.parseInt(TimeUtil.sdfYmdhms.format(new Date(now)).substring(17)));
 				jsonBase.init(LangConst.baseSuccess);
@@ -85,8 +85,8 @@ public class BaseController {
 	/*
 	 * 收获
 	 */
-	@RequestMapping("/base/havest")
-	public JsonBase havest(@RequestParam String token, @RequestParam String coinKey) {
+	@RequestMapping("/base/harvest")
+	public JsonBase harvest(@RequestParam String token, @RequestParam String coinKey) {
 		JsonBase jsonBase = new JsonBase();
 		if (!StringUtils.isEmpty(token) && !StringUtils.isEmpty(coinKey)) {
 			UserEntity userEntity = userRepository.findByToken(token);
@@ -94,10 +94,10 @@ public class BaseController {
 				jsonBase.init(LangConst.baseToken);
 			} else { // 有效请求
 				long id = userEntity.getId();
-				String key = GlobalConst.redisMapCoinHavest + id;
+				String key = GlobalConst.redisMapCoinHarvest + id;
 				Map<String, Object> map = redisRepository.getMapAll(key);
 				if (!map.containsKey(coinKey)) { // 收获不存在
-					jsonBase.init(LangConst.baseHavestNotExisit);
+					jsonBase.init(LangConst.baseHarvestNotExisit);
 				} else { // 收获
 					// TODO redis收获记录过量，存到mysql
 					double harvest = (double) map.get(coinKey);

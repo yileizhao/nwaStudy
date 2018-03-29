@@ -27,7 +27,7 @@ public class LangConst {
 	public static TwoTuple<Integer, String> userCertificationIdcardTimeError = new TwoTuple<Integer, String>(10420, "实名认证时间错误！");
 	public static TwoTuple<Integer, String> userCertificationNotCertification = new TwoTuple<Integer, String>(10430, "实名认证错误！");
 	
-	public static TwoTuple<Integer, String> baseHavestNotExisit = new TwoTuple<Integer, String>(10500, "收获不存在！");
+	public static TwoTuple<Integer, String> baseHarvestNotExisit = new TwoTuple<Integer, String>(10500, "收获不存在！");
 	
 	
 }

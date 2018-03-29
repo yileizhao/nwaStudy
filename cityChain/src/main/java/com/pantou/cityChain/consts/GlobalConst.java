@@ -1,14 +1,18 @@
 package com.pantou.cityChain.consts;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import com.pantou.cityChain.vo.TwoTuple;
 
 /**
  * 全局变量
  */
 public class GlobalConst {
 
-	public static String redisMapCoinHavest = "citiChain:map:coinHavest:";
-	
+	public static String redisMapCoinHarvest = "citiChain:map:coinHarvest:";
+
 	public static int nicknameMax = 20; // 昵称最大长度
 	public static int smsCodeLen = 6; // 验证码长度
 	public static String smsCodeSource = "0123456789"; // 验证码原串
@@ -27,4 +31,16 @@ public class GlobalConst {
 	public static long baseCityCoinAddTime = TimeUnit.MINUTES.toMillis(48); // city币最后一次活跃后自动增长两天
 	public static int baseCityCoinMax = 48; // city币最多未收取48次
 	public static int coinHisotoryPageSize = 3; // city币收获记录分页条数
+
+	@SuppressWarnings({ "serial", "deprecation" })
+	public static List<TwoTuple<Float, Float>> popXys = new ArrayList<TwoTuple<Float, Float>>() {
+		{
+			// 宽：1.2rem 高：1.4rem
+			for (int i = 0; i < 8; i++) {
+				for (int j = 0; j < 5; j++) {
+					add(new TwoTuple<Float, Float>(new Float(i * 1.2), new Float(j * 1.4)));
+				}
+			}
+		}
+	};
 }

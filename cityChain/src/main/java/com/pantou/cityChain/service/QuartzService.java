@@ -33,15 +33,16 @@ public class QuartzService {
 		long now = TimeUtil.now();
 		long time = now - GlobalConst.baseCityCoinAddTime;
 		Long powerTotalObject = userRepository.queryActiveUserPowerTotal(time);
-		long powerTotal = powerTotalObject == null ? 0 : powerTotalObject;
+		// TODO 上线前改为0
+		double powerTotal = (powerTotalObject == null ? 0 : powerTotalObject) + 2000;
 		List<Object> objects = userRepository.queryActiveUsers(time);
 		double totalAdd = 0;
 		if (powerTotal > 0) {
 			for (Object object : objects) {
 				Object[] objectArr = (Object[]) object;
-				String key = GlobalConst.redisMapCoinHavest + objectArr[0];
+				String key = GlobalConst.redisMapCoinHarvest + objectArr[0];
 				if (redisRepository.getMapAll(key).size() < GlobalConst.baseCityCoinMax) {
-					double add = (int) objectArr[1] / (double) powerTotal * GlobalConst.coinCityTotalPerHour;
+					double add = (int) objectArr[1] / powerTotal * GlobalConst.coinCityTotalPerHour;
 					totalAdd += add;
 					redisRepository.addMapField(key, now + "", add);
 				}

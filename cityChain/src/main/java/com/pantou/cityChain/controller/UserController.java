@@ -20,7 +20,7 @@ import com.pantou.cityChain.util.ValidateUtil;
 import com.pantou.cityChain.vo.JsonBase;
 
 /*
- * 用户控制器
+ * 用户控制器：@RestController 等于 @Controller @ResponseBody的混合体
  */
 @RestController
 public class UserController {
