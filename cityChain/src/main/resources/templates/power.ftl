@@ -116,8 +116,6 @@
 				</section>
 				<div class="module__fetch__ft">
 					<div class="module__fetch__more">点击查看更多</div>
-					<!---->
-					<!---->
 				</div>
 			</section>
 			<button data-v-5f4f905e="" class="jsxql">获取原力</button>

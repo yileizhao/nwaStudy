@@ -76,33 +76,14 @@
 	<div id="app">
 		<!---->
 		<div data-v-49e6a8d4="">
-			<section data-v-49e6a8d4="" class="head">
-				<h3 data-v-49e6a8d4="" class="head-title">黑钻总数</h3>
-				<div data-v-49e6a8d4="" class="head-text"></div>
-				<div data-v-49e6a8d4="" class="head-btn">兑换</div>
-				<div data-v-49e6a8d4="" class="head-bottom">
-					冻结黑钻数<span data-v-49e6a8d4="" class="head-freezenum">0</span>
-				</div>
-			</section>
 			<section data-v-49e6a8d4="" class="module__block top-margin">
-				<h3 class="module__title">
-					黑钻简介
-					<!---->
+				<h3 class="module__title" style="text-align: center;">
+					收支记录
 				</h3>
-				<div class="module__box text"
-					style="background-color: rgb(255, 255, 255);">
-					黑钻是依托于区块链技术，基于个人星球活动产生的奖励，可以用于星球上的消费与兑换等。 <br data-v-49e6a8d4="">除日常根据原力大小生长黑钻之外，原力大于35的用户有机会获取额外的黑钻大奖，称之为<span
-						data-v-49e6a8d4="" class="font-point">幸运钻</span>。同时，获得幸运钻也会消耗一定数量的原力。48小时不领取黑钻将暂停生长。
-					<br data-v-49e6a8d4="">黑钻总量有限，且每2年产出量减少一半，随着时间的推移获取难度越来越大，前期参与更有优势。
-				</div>
 			</section>
 			<section data-v-49e6a8d4="" class="module__fetch">
 				<!---->
 				<section data-v-49e6a8d4="" class="module__block top-margin">
-					<h3 class="module__title">
-						收支记录
-						<!---->
-					</h3>
 					<div class="module__box no" style="background-color: inherit;">
 						<section data-v-49e6a8d4=""
 							class="bizmodule__record-cells bottom-line">
@@ -110,11 +91,9 @@
 								<tbody data-v-88de3002="">
 									<#list history as item>
 									<tr data-v-88de3002="">
-										<td data-v-88de3002="" class="nickname center">${item.time}</td>
-										<td data-v-88de3002="" class="nickname center">${item.coin.value}</td>
-										<td data-v-88de3002="" class="nickname center">${item.type.value}</td>
-										<td data-v-88de3002="" class="nickname center">${item.plusMinus.value}</td>
-										<td data-v-88de3002="" class="nickname center">${item.cnt}</td>
+										<td data-v-88de3002="" class="nickname center">${item.type.value} ${item.plusMinus.value}</td>
+										<td data-v-88de3002="" class="nickname center">${item.cnt}${item.coin.value}</td>
+										<td data-v-88de3002="" class="nickname center">${item.time?number_to_datetime}</td>
 									</tr>
 									</#list>
 								</tbody>
@@ -122,12 +101,10 @@
 							<div class="module__fetch__ft"></div>
 						</section>
 					</div>
+					<div class="module__fetch__ft">
+						<div class="module__fetch__more">点击查看更多</div>
+					</div>
 				</section>
-				<div class="module__fetch__ft">
-					<div class="module__fetch__more">点击查看更多</div>
-					<!---->
-					<!---->
-				</div>
 			</section>
 		</div>
 	</div>

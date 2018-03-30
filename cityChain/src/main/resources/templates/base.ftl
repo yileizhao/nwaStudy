@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<#include "baseMacro.ftl">
 <html style="font-size: 69.3333px;">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -13,24 +14,65 @@
 		var intDiff = ${nextRefTime}; //倒计时总秒数
 		window.setInterval(function(){
 		    intDiff--;
-		    if (intDiff == 0 && $(".popo-tip").length) {
-		    	window.location.reload();
+		    if (intDiff == 0) {
+		    	intDiff = ${nextRefTime};
+		    	var popLen = $(".popo-tip").length;
+				if (popLen == 0) {
+					window.location.reload();
+			    } else if (popLen < ${popXysPage}) {
+			    	// TODO 位置不变
+			    	window.location.reload();
+			    }
 		    }
 	    }, 1000);
-		if ($(".popo-tip").length < ${popXysPage}) {
-			if (popLen == 0) {
-				$(".popo").append("<div data-v-0f719103='' class='lian updown' style='top: 1.5rem; left: 3.22rem;' id='div-1' onclick=''> <div data-v-0f719103='' class='popo-tip'>正在生长中</div></div>");
-			}
-		    
+		if ($(".popo-tip").length == 0) {
+			$(".popo").append("<div data-v-0f719103='' class='lian updown' style='top: 1.5rem; left: 3.22rem;' id='div-1' onclick=''> <div data-v-0f719103='' class='popo-tip'>正在生长中</div></div>");
 		}
 	});
 	
 	function harvest(divId) {
-		htmlobj=$.ajax({url:"/base/harvest?token=${token}&coinKey=" + divId,async:false});
+		$.ajax({url:"/base/harvest?token=${token}&coinKey=" + divId,async:false});
 		$("#div" + divId).remove();
-		window.location.reload();
+		if ($(".popo-tip").length == 0) {
+			window.location.reload();
+		}
 	}
 </script>
+<script type="text/javascript">
+    var websocket = null;
+  	// 判断是否支持WebSocket
+    if('WebSocket' in window){
+        websocket = new WebSocket("ws://localhost/websocket");
+    } else{
+        alert('Not support websocket')
+    }
+    // 连接错误
+    websocket.onerror = function(){
+    	console.log("error");
+    };
+    //连接成功建立
+    websocket.onopen = function(event){
+    	console.log("open");
+    }
+    // 连接关闭
+    websocket.onclose = function(){
+    	console.log("close");
+    }
+    // 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+    window.onbeforeunload = function(){
+        websocket.close();
+    }
+ 	// 接收消息
+    websocket.onmessage = function(event){
+    	console.log(event.data);
+    	$("#notice").text(event.data);
+    }
+    // 发送消息
+    function send(msg){
+        websocket.send(msg);
+    }
+</script>
+
 <script type="text/javascript" async=""
 	src="./星球_files/DATracker.globals.1.4.0.js.下载"></script>
 <script>window.NRUM=window.NRUM||{},window.NRUM.config={key:"32fe9c8395ba4b4195f6a845504d4aa5",clientStart:+new Date},function(){var e=document.getElementsByTagName("script")[0],n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src="//nos.netease.com/apmsdk/napm-web-min-1.1.5.js","DEPLOY_ENV_FOR_FE"=="online"&&setTimeout(function(){e.parentNode.insertBefore(n,e)})}();</script>
@@ -97,8 +139,15 @@
 		<div data-v-0f719103="">
 			<!---->
 			<div data-v-0f719103="" class="section1">
+				<marquee scrollAmount="2" scrollDelay="60" onmouseover="this.stop()"
+					onmouseout="this.start()" direction="left"
+					style="width: 100%; height: 24px; background: #7033cc">
+					<font size="2" color="white" id="notice">南京潘透孵化器管理有限公司，专注早期创业项目的孵化和投资。旗下品牌创业大赛：直通硅谷，致力于打造全球最酷的顶级双创赛事品牌。 </font>
+				</marquee>
+				<!-- 
 				<div data-v-0f719103="" class="total-lian"
 					onclick="window.open('intro', '_self')">推广</div>
+					 -->
 				<div data-v-0f719103="" class="total-li"
 					onclick="window.open('power?token=${token}', '_self')">当前算力：${power}</div>
 				<div data-v-0f719103="" class="use-info-btn">
@@ -164,11 +213,9 @@
 				</section>
  				-->
 				<section data-v-49e6a8d4="" class="module__fetch">
-					<!---->
 					<section data-v-49e6a8d4="" class="module__block top-margin">
-						<h3 class="module__title">
-							收支记录
-							<!---->
+						<h3 class="module__title" style="text-align: center;">
+							最新记录
 						</h3>
 						<div class="module__box no" style="background-color: inherit;">
 							<section data-v-49e6a8d4=""
@@ -177,11 +224,9 @@
 									<tbody data-v-88de3002="">
 										<#list history as item>
 										<tr data-v-88de3002="">
-											<td data-v-88de3002="" class="nickname center">${item.time?number_to_datetime}</td>
-											<td data-v-88de3002="" class="nickname center">${item.coin.value}</td>
-											<td data-v-88de3002="" class="nickname center">${item.type.value}</td>
 											<td data-v-88de3002="" class="nickname center">${item.plusMinus.value}</td>
-											<td data-v-88de3002="" class="nickname center">${item.cnt}</td>
+											<td data-v-88de3002="" class="nickname center">${item.cnt}${item.coin.value}</td>
+											<td data-v-88de3002="" class="nickname center">${item.time?number_to_datetime}</td>
 										</tr>
 										</#list>
 									</tbody>

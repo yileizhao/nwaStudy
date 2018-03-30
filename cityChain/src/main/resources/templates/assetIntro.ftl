@@ -82,7 +82,7 @@
 						<tbody data-v-88de3002="">
 							<tr data-v-88de3002="">
 								<td data-v-88de3002="" class="nickname left">名称</td>
-								<td data-v-88de3002="" class="nickname right">${coin}</td>
+								<td data-v-88de3002="" class="nickname right">${coinValue}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -109,9 +109,7 @@
 				</h3>
 				<div class="module__box text"
 					style="background-color: rgb(255, 255, 255);">
-					${coin}是依托于区块链技术，基于个人星球活动产生的奖励，可以用于星球上的消费与兑换等。 <br data-v-49e6a8d4="">除日常根据原力大小生长黑钻之外，原力大于35的用户有机会获取额外的黑钻大奖，称之为<span
-						data-v-49e6a8d4="" class="font-point">幸运钻</span>。同时，获得幸运钻也会消耗一定数量的原力。48小时不领取黑钻将暂停生长。
-					<br data-v-49e6a8d4="">黑钻总量有限，且每2年产出量减少一半，随着时间的推移获取难度越来越大，前期参与更有优势。
+					${desc}
 				</div>
 			</section>
 			</section>

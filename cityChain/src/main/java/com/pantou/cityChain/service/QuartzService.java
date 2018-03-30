@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.pantou.cityChain.consts.CoinEnum;
 import com.pantou.cityChain.consts.GlobalConst;
 import com.pantou.cityChain.repository.RedisRepository;
 import com.pantou.cityChain.repository.UserRepository;
@@ -45,6 +46,7 @@ public class QuartzService {
 					double add = (int) objectArr[1] / powerTotal * GlobalConst.coinCityTotalPerHour;
 					totalAdd += add;
 					redisRepository.addMapField(key, now + "", add);
+					WebSocketService.sendMessageAll((String) objectArr[2] + "获得" + add + CoinEnum.CoinCity.getValue());
 				}
 			}
 		}

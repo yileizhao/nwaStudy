@@ -31,11 +31,12 @@ public class GlobalConst {
 	public static long baseCityCoinAddTime = TimeUnit.MINUTES.toMillis(48); // city币最后一次活跃后自动增长两天
 	public static int baseCityCoinMax = 48; // city币最多未收取48次
 	public static int coinHisotoryPageSize = 3; // city币收获记录分页条数
+	public static int harvestTime = 60; // city币收获间隔
 
-	public static int popXysPage = 12; // 钻石排布单页最多12个
-	public static double popXysX = 1.2f; // 钻石排布坐标宽
-	public static double popXysY = 1.4f; // 钻石排布坐标高
-	public static List<TwoTuple<Double, Double>> popXys = new ArrayList<TwoTuple<Double, Double>>() { // 钻石排布坐标列表
+	public static int popXysPage = 12; // city币排布单页最多12个
+	public static double popXysX = 1.2f; // city币排布坐标宽
+	public static double popXysY = 1.4f; // city币排布坐标高
+	public static List<TwoTuple<Double, Double>> popXys = new ArrayList<TwoTuple<Double, Double>>() { // city币排布坐标列表
 		private static final long serialVersionUID = -3209528440754459108L;
 		{
 			// 宽：1.2rem 高：1.4rem
@@ -46,5 +47,5 @@ public class GlobalConst {
 			}
 		}
 	};
-	public static int popXysLen = popXys.size(); // 钻石排布坐标列表长度
+	public static int popXysLen = popXys.size(); // city币排布坐标列表长度
 }

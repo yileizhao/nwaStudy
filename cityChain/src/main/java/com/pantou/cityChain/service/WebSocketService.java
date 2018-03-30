@@ -31,7 +31,6 @@ public class WebSocketService {
 	public void onOpen(Session session) {
 		this.session = session;
 		webSocketServices.add(this);
-		sendMessage("hi: " + this.toString());
 		System.out.println("建立连接！当前在线：" + getOnlineCount());
 	}
 

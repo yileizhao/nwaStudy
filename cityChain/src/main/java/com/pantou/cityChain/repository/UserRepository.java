@@ -29,7 +29,7 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
 	public Long queryActiveUserPowerTotal(long time);
 	
 	// 获取活跃用户
-	@Query("select ue.id, ue.power from UserEntity ue where ue.timeBase > ?1")
+	@Query("select ue.id, ue.power, ue.nickname from UserEntity ue where ue.timeBase > ?1")
     public List<Object> queryActiveUsers(long time);
 	
 }

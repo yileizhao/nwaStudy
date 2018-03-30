@@ -18,9 +18,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.pantou.cityChain.consts.CoinEnum;
 import com.pantou.cityChain.consts.GlobalConst;
 import com.pantou.cityChain.consts.LangConst;
+import com.pantou.cityChain.consts.PowerEnum;
 import com.pantou.cityChain.entity.HistoryEntity;
 import com.pantou.cityChain.entity.PowerHistoryEntity;
 import com.pantou.cityChain.entity.UserEntity;
+import com.pantou.cityChain.repository.PowerHistoryRepository;
 import com.pantou.cityChain.repository.RedisRepository;
 import com.pantou.cityChain.repository.UserRepository;
 import com.pantou.cityChain.service.UserService;
@@ -44,6 +46,9 @@ public class H5Controller {
 
 	@Autowired
 	private RedisRepository redisRepository;
+
+	@Autowired
+	private PowerHistoryRepository powerHistoryRepository;
 
 	/**
 	 * 介绍
@@ -84,13 +89,21 @@ public class H5Controller {
 			} else { // 有效请求
 				jsonBase.init(LangConst.baseSuccess);
 
+				long now = TimeUtil.now();
+				if (!TimeUtil.isSameDay(userEntity.getTimeBase(), now)) { // 每日登录，增加原力
+					userEntity.setPower(userEntity.getPower() + GlobalConst.loginPower);
+					powerHistoryRepository.save(new PowerHistoryEntity(userEntity.getId(), now, GlobalConst.loginPower,
+							PowerEnum.DayLogin));
+				}
+				userEntity.setTimeBase(now);
+				userRepository.save(userEntity);
+
 				map.put("token", token);
 				map.put("power", userEntity.getPower());
 				List<FourTuple<String, Double, Double, Double>> coins = new ArrayList<FourTuple<String, Double, Double, Double>>();
 				String sql = "select he from HistoryEntity he";
 				map.put("history", userService.findBysql(HistoryEntity.class, sql,
 						new TwoTuple<Integer, Integer>(0, GlobalConst.coinHisotoryPageSize)));
-				map.put("popXysPage", GlobalConst.popXysPage);
 				Set<Integer> indexSet = new HashSet<Integer>();
 				for (Entry<String, Object> entry : redisRepository
 						.getMapAll(GlobalConst.redisMapCoinHarvest + userEntity.getId()).entrySet()) {
@@ -110,6 +123,8 @@ public class H5Controller {
 					indexSet.add(index);
 				}
 				map.put("coins", coins);
+				map.put("popXysPage", GlobalConst.popXysPage);
+				map.put("harvestTime", GlobalConst.harvestTime);
 				map.put("nextRefTime",
 						60 - Integer.parseInt(TimeUtil.sdfYmdhms.format(new Date(TimeUtil.now())).substring(17)));
 			}
@@ -164,8 +179,10 @@ public class H5Controller {
 		if (!StringUtils.isEmpty(coin) && !StringUtils.isEmpty(coin)) {
 			jsonBase.init(LangConst.baseSuccess);
 
-			map.put("coin", coin);
+			CoinEnum coinEnum = CoinEnum.valueOf(coin);
+			map.put("coinValue", coinEnum.getValue());
 			map.put("cnt", cnt);
+			map.put("desc", coinEnum.getDesc());
 		} else { // 参数错误
 			jsonBase.init(LangConst.baseParamError);
 		}
