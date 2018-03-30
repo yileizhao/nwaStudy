@@ -77,6 +77,35 @@ public class H5Controller {
 	}
 
 	/**
+	 * 邀请
+	 */
+	@RequestMapping("/h5/invite")
+	public String invite(@RequestParam String token, Map<String, Object> map) {
+		JsonBase jsonBase = new JsonBase();
+		if (!StringUtils.isEmpty(token)) {
+			UserEntity userEntity = userRepository.findByToken(token);
+			if (userEntity == null) { // 令牌错误
+				jsonBase.init(LangConst.baseToken);
+			} else { // 有效请求
+				jsonBase.init(LangConst.baseSuccess);
+
+				map.put("inviteCode", userEntity.getInviteCode());
+				map.put("inviteCodeCnt", GlobalConst.inviteCodeMax - userEntity.getInviteCodeCnt());
+				map.put("inviteCodeMax", GlobalConst.inviteCodeMax);
+			}
+		} else { // 参数错误
+			jsonBase.init(LangConst.baseParamError);
+		}
+
+		if (jsonBase.getCode() != LangConst.baseSuccess.first) {
+			map.put("jsonBase", JSONObject.toJSONString(jsonBase));
+			return "error";
+		} else {
+			return "invite";
+		}
+	}
+
+	/**
 	 * 基地
 	 */
 	@RequestMapping("/h5/base")

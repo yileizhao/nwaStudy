@@ -32,6 +32,7 @@ public class UserEntity {
 
 	private String token; // 令牌
 	private long timeBase; // 最后访问基地时间（日活跃）
+	private byte[] qrCode; // 二维码数组
 
 	public long getId() {
 		return id;
@@ -151,5 +152,13 @@ public class UserEntity {
 
 	public void setTimeBase(long timeBase) {
 		this.timeBase = timeBase;
+	}
+
+	public byte[] getQrCode() {
+		return qrCode;
+	}
+
+	public void setQrCode(byte[] qrCode) {
+		this.qrCode = qrCode;
 	}
 }

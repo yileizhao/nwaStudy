@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<#include "baseMacro.ftl">
+<!-- saved from url=(0032)https://star.8.163.com/m#/invite -->
 <html style="font-size: 69.3333px;">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -7,87 +7,39 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
 <meta content="telephone=no" name="format-detection">
-<title>星球</title>
-<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		var intDiff = ${nextRefTime}; //倒计时总秒数
-		window.setInterval(function(){
-		    intDiff--;
-		    if (intDiff == 0) {
-		    	intDiff = ${nextRefTime};
-		    	var popLen = $(".popo-tip").length;
-				if (popLen == 0) {
-					window.location.reload();
-			    } else if (popLen < ${popXysPage}) {
-			    	// TODO 位置不变
-			    	window.location.reload();
-			    }
-		    }
-	    }, 1000);
-		if ($(".popo-tip").length == 0) {
-			$(".popo").append("<div data-v-0f719103='' class='lian updown' style='top: 1.5rem; left: 3.22rem;' id='div-1' onclick=''> <div data-v-0f719103='' class='popo-tip'>正在生长中</div></div>");
-		}
-	});
-	
-	function harvest(divId) {
-		$.ajax({url:"/base/harvest?token=${token}&coinKey=" + divId,async:false});
-		$("#div" + divId).remove();
-		if ($(".popo-tip").length == 0) {
-			window.location.reload();
-		}
-	}
-</script>
-<script type="text/javascript">
-    var websocket = null;
-  	// 判断是否支持WebSocket
-    if('WebSocket' in window){
-        websocket = new WebSocket("ws://localhost/websocket");
-    } else{
-        alert('Not support websocket')
-    }
-    // 连接错误
-    websocket.onerror = function(){
-    	console.log("error");
-    };
-    //连接成功建立
-    websocket.onopen = function(event){
-    	console.log("open");
-    }
-    // 连接关闭
-    websocket.onclose = function(){
-    	console.log("close");
-    }
-    // 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-    window.onbeforeunload = function(){
-        websocket.close();
-    }
- 	// 接收消息
-    websocket.onmessage = function(event){
-    	console.log(event.data);
-    	$("#notice").text(event.data);
-    }
-    // 发送消息
-    function send(msg){
-        websocket.send(msg);
-    }
-</script>
-
+<title>邀请码</title>
 <script type="text/javascript" async=""
-	src="./星球_files/DATracker.globals.1.4.0.js.下载"></script>
+	src="./邀请码_files/DATracker.globals.1.4.0.js.下载"></script>
 <script>window.NRUM=window.NRUM||{},window.NRUM.config={key:"32fe9c8395ba4b4195f6a845504d4aa5",clientStart:+new Date},function(){var e=document.getElementsByTagName("script")[0],n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src="//nos.netease.com/apmsdk/napm-web-min-1.1.5.js","DEPLOY_ENV_FOR_FE"=="online"&&setTimeout(function(){e.parentNode.insertBefore(n,e)})}();</script>
 <script>!function(e){var n=document.getElementsByTagName("html")[0],i=0;function a(){var e=Math.min(document.documentElement.getBoundingClientRect().width,window.innerWidth);520<e?e=520:e||i<9&&(e=375,setTimeout(function(){i++,a()},200));var t=e/(750/100);n.style.fontSize=t+"px"}a(),e.addEventListener("resize",function(){a()})}(window),function(){var e=!1;if(Object.defineProperty){var t,n=window.navigator.userAgent,i=window.navigator.appVersion;if(-1<n.toLowerCase().indexOf("android")){var a=n.match(/Android\s([0-9\.]*)/i),o=n.match(/Release\/([0-9\.]*)/i);a?t=parseFloat(a[1]):o&&(t=parseFloat(o[1])),t<4.2&&(e=!0)}n.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)&&(t=i.match(/OS (\d+)_(\d+)_?(\d+)?/),(t=parseInt(t[1],10))<7&&(e=!0))}else e=!0;e&&(window.location.href="https://i.epay.126.net/a/e/wap/20160216/other/oldDevice.html")}();</script>
 <link rel="shortcut icon" href="https://i.epay.126.net/m/at/favicon.ico">
-<link href="/css/app.183fb83e3a5109f9c8e4f248d3b9ebe0.css"
+<link href="/css/app.125a1568a2b3073aa4d4088d1f835541.css"
 	rel="stylesheet">
 <script type="text/javascript" charset="utf-8" async=""
-	src="./星球_files/9-118d5699.js.下载"></script>
+	src="./邀请码_files/6-b3d959ee.js.下载"></script>
 </head>
 <body>
 	<svg xmlns="http://www.w3.org/2000/svg"
 		xmlns:xlink="http://www.w3.org/1999/xlink"
 		style="position: absolute; width: 0; height: 0"
 		id="__SVG_SPRITE_NODE__">
+		<symbol viewBox="0 0 12 21" id="icon-arrow-rank">
+    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="icon-arrow-rank_Page-1" stroke="none" stroke-width="1"
+			fill="none" fill-rule="evenodd">
+        <g id="icon-arrow-rank_首页-原力排行榜"
+			transform="translate(-706.000000, -1013.000000)" fill="#754DFA"
+			fill-rule="nonzero">
+            <path
+			d="M722,1018.71464 C722,1018.8827 721.942315,1019.04837 721.822136,1019.18522 L712.515548,1029.19723 C712.234331,1029.49015 711.765637,1029.49015 711.48442,1029.19723 L702.177831,1019.18522 C701.918247,1018.89231 701.944686,1018.43853 702.245131,1018.17922 C702.543173,1017.91752 702.992639,1017.94873 703.252223,1018.24645 L712.001186,1027.56458 L720.747745,1018.24405 C721.007329,1017.94633 721.456795,1017.91752 721.754837,1018.17682 C721.918279,1018.31848 722,1018.51776 722,1018.71464 Z"
+			id="icon-arrow-rank_Shape"
+			transform="translate(712.000000, 1023.708458) rotate(-90.000000) translate(-712.000000, -1023.708458) "></path>
+        </g>
+    </g>
+</symbol>
 		<symbol viewBox="0 0 14 24" id="icon-arrow-right">
     <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
     <title>Back Arrow Copy 21</title>
@@ -136,120 +88,30 @@
 </symbol></svg>
 	<div id="app">
 		<!---->
-		<div data-v-0f719103="">
-			<!---->
-			<div data-v-0f719103="" class="section1">
-				<marquee scrollAmount="2" scrollDelay="60" onmouseover="this.stop()"
-					onmouseout="this.start()" direction="left"
-					style="width: 100%; height: 24px; background: #7033cc">
-					<font size="2" color="white" id="notice">南京潘透孵化器管理有限公司，专注早期创业项目的孵化和投资。旗下品牌创业大赛：直通硅谷，致力于打造全球最酷的顶级双创赛事品牌。 </font>
-				</marquee>
-				<!-- 
-				<div data-v-0f719103="" class="total-lian"
-					onclick="window.open('intro', '_self')">推广</div>
-					 -->
-				<div data-v-0f719103="" class="total-li"
-					onclick="window.open('power?token=${token}', '_self')">当前算力：${power}</div>
-				<div data-v-0f719103="" class="use-info-btn">
-					<a href="intro">介</a>
-					 <a href="strategy">秘</a>
-					 <a href="invite?token=${token}">邀请</a>
+		<div data-v-222a6158="" class="page-invite">
+			<img data-v-222a6158=""
+				src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJMAAABcCAMAAABdhXdGAAAAqFBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8j1z1tAAAAN3RSTlMA5jNmGYBMmc2z+wcwIg5ECnc8XikE9uPbre/Rn5OPcIpX69/Du7elFsAeE/PHe1RI12omhDUV7M7zvwAABTJJREFUaN7tm9eWqjAUQI+OioIUaYq9jL07Mzf//2f3LksKocUwLB7ufnMOg9sQwslJALBX3crbdLdnYNG+B+wRSxMiaQe9SuU4iQqZSJLQWVeI4xyppD6CQ+Bpyjr5WtpPXEAErVe0DZh9tW3AP1QkiwsUHRSBATyLV9DBRgH6x9oAQNJUgaKOIqgBT+UV/Ahd9XWJnP7gVs3b6YZ4VA04LNxnpvDggjtY3k5uRP/8BJ4PHO1ZcEf5NSc4cfF+FThmBxJv7QFAq1NXmvrfjl3NiH1bxDlBe/JJXzfFefQmU2lhVgt2NPlsbef40xyI0+ELBDB6nBNhjTANPEZkZUg5TUGIc4LTBneqLTzYZR8G25TTDIT4SnAC3IjjV/8RaSbi1AEhTOKU8MCq49ssI02LduoaIML2V5wGe/gH9dm0ICPazxIJOc1ElADJkO4k1MdbeyjQCW7pUoMZQKFOUK0rmOER0VQCRRlPXIAinXjsOXX3c924aCeu0w88KImThvvXN5TFicrp/juxTl7NSHPabEJO15ley4h+2Yo6bQIfoYWT4KR99xHqjzUAoiT2vGuJOXnPIcmJdxo9PiuU0w2EsEWcyOHXWCdLJfMWEhOiKuJEEgM11qkdMUdoaiDCkCSGIk4o1qlKfiM15bGz5yptKuXe5O8kSw/K5zQtn5NfK5/TBMScjDgnMzenEUTRxWHOyYxz6uTlpEAULkmOuCnq0Yp22uEsT4dF/koGVTA4hUdEdP22eafGCH/2Pai/b6RGTlOddYWZRI7sZ7tg1FnIiZFYAXjKm0ZzRU8c34nCBf4xpicFHuu096mgc7+Sl0YMnR4zk3eo0MX1Uh6DiO1UuooIOutkU6GuB8lYSyT4jJ6gCKxwpbPKOjWoUAPS2OFjj5BIeo3VC7I41SEdUrWRdQKtlXLtyINqUw9arefN8Va2D1lr9pry6jPAOhl9tt6kP4OTfJxMxNPF0cv9dAcz5ARn/5EshfJqdZOLEyx5JwcI7c6oo/NjpnsaT0g9tZ/c4a+i5U7ttPXZAsVZeH6X3OP3eFRZQmZ2A6I0lppzzmsASVVl8535Q897x6lPuqITnnOaK0TwJ26NY5PyhQpkdfqafTT2z9gRSXGYatnvDGt2qjsbzgmvtvTPeH1EjmFmJ713/2KTc8LDmq/fYzVfVsrI6rR83oka79RkGk0igRKYczJlsB/eqRI6flhQraeGR8J0JxhJtlPeTvL9XNV+xQlmfdl5cP5OYHSab7bSWMvfiWi51TDnANFLs2aVo20B5OuUTid1abZ4J8Dr22sojdMCJx2lcaJm/mVxcq9UduYV52TdRkoMSxVRLNYKz+TPLzjVekiKSjt/pzWSZJC/0xzJssvdCSFUulyljE5lvHaB/DpC7k66ZEMd7PydYPMdtGK4st/+yR8RTPWiny0m1YiBUY7nHVzIzN0qyTOYui2HZckLEvIn8SqonuQkUOXSBeq+hD/UHj/CJYNTADSpKycTyAK/F5L/q8k54Yb1n1UX2/mIYVpBFKtOxCG2B5Bpz+iPQirRvNMSZxmO9lwqkKC5gyx7a39Uaos773RiVgRHSJItZNmDrNATZ97pi9m330Wy7IHiI6aisCWfdhFO0EKYr6L2tDeZe4V30g/kfIU7DWNqrA2VnM8v5h2J4+vm9ciwyq4yzFR8vk9Zpb6X5V2S4VMJPzUD7ic5DynVAluVdHLS37l5vWKj1om/63ObAS7d1x9+pN5NWjYyvpvUaDbZXMu9v5t0Awrrtr2OPfgL+pz3OphjYDEAAAAASUVORK5CYII="
+				alt="" class="invite-name">
+			<div data-v-222a6158="" class="invite-jt">未来之门正在向您开启</div>
+			<div data-v-222a6158="" class="invite-wrap">
+				<div data-v-222a6158="" class="invite-title">您的邀请码</div>
+				<div data-v-222a6158="" class="invite-code">${inviteCode}</div>
+				<div data-v-222a6158="" class="invite-btn disabled">复制</div>
+				<div data-v-222a6158="" class="invite-left">剩余邀请次数${inviteCodeCnt}次</div>
+				<div data-v-222a6158="" class="invite-whole">您的邀请码总次数${inviteCodeMax}次</div>
+				<img data-v-222a6158="" src="/imgs/code.94bde17.jpg" alt=""
+					class="invite-qrcode">
+				<div data-v-222a6158="" class="scan-content">
+					<div data-v-222a6158="">扫码下载网易星球</div>
+					<div data-v-222a6158="" class="scan-content-light">加入星球参与免费竞拍</div>
 				</div>
-				<div data-v-0f719103="" class="popo">
-					<#list coins as item>
-					<div data-v-0f719103="" class="lian updown"
-						style="top: ${item.fourd}rem; left: ${item.third}rem;" id="div${item.first}"
-						onclick="harvest(${item.first})">
-						<div data-v-0f719103="" class="popo-tip">${item.second}</div>
-					</div>
-					</#list>
-				</div>
-				<div data-v-0f719103="" class="btn-group">
-					<!---->
-					<div data-v-0f719103="" class="auction-notice">New</div>
-					<a data-v-0f719103="" href="asset?token=${token}" class="left btn1">我的资产</a>
-					<a data-v-0f719103="" href="task" class="right btn3">提升算力</a>
-				</div>
-			</div>
-			<div data-v-0f719103="" class="section2">
-				<!-- 
-				<section data-v-88de3002="" data-v-0f719103="" class="module__fetch">
-					<table data-v-88de3002="">
-						<div data-v-88de3002="" class="tip">2天内不领取黑钻将暂停生长</div>
-						<caption data-v-88de3002="">排行榜</caption>
-						<thead data-v-88de3002="">
-							<tr data-v-88de3002="">
-								<th data-v-88de3002="" width="29%">名次</th>
-								<th data-v-88de3002="" width="42%" class="start-chain center">用户名</th>
-								<th data-v-88de3002="" width="29%" class="origin">原力</th>
-							</tr>
-						</thead>
-						<tbody data-v-88de3002="">
-							<tr data-v-88de3002="">
-								<td data-v-88de3002=""><span data-v-88de3002=""
-									class="order-icon order-icon-gold"></span></td>
-								<td data-v-88de3002="" class="nickname center">Soarfly</td>
-								<td data-v-88de3002="" class="origin">356</td>
-							</tr>
-							<tr data-v-88de3002="">
-								<td data-v-88de3002=""><span data-v-88de3002=""
-									class="order-icon order-icon-silver"></span></td>
-								<td data-v-88de3002="" class="nickname center">啊建</td>
-								<td data-v-88de3002="" class="origin">355</td>
-							</tr>
-							<tr data-v-88de3002="">
-								<td data-v-88de3002=""><span data-v-88de3002=""
-									class="order-icon order-icon-bronze"></span></td>
-								<td data-v-88de3002="" class="nickname center">XMSky</td>
-								<td data-v-88de3002="" class="origin">354</td>
-							</tr>
-							<tr data-v-88de3002="">
-								<td data-v-88de3002=""><span data-v-88de3002=""
-									class="order-icon">4</span></td>
-								<td data-v-88de3002="" class="nickname center">林杰</td>
-								<td data-v-88de3002="" class="origin">354</td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="module__fetch__ft"></div>
-				</section>
- 				-->
-				<section data-v-49e6a8d4="" class="module__fetch">
-					<section data-v-49e6a8d4="" class="module__block top-margin">
-						<h3 class="module__title" style="text-align: center;">
-							最新记录
-						</h3>
-						<div class="module__box no" style="background-color: inherit;">
-							<section data-v-49e6a8d4=""
-								class="bizmodule__record-cells bottom-line">
-								<table data-v-88de3002="">
-									<tbody data-v-88de3002="">
-										<#list history as item>
-										<tr data-v-88de3002="">
-											<td data-v-88de3002="" class="nickname center">${item.plusMinus.value}</td>
-											<td data-v-88de3002="" class="nickname center">${item.cnt}${item.coin.value}</td>
-											<td data-v-88de3002="" class="nickname center">${item.time?number_to_datetime}</td>
-										</tr>
-										</#list>
-									</tbody>
-								</table>
-								<div class="module__fetch__ft"></div>
-							</section>
-						</div>
-					</section>
-					<div class="module__fetch__ft">
-						<div class="module__fetch__more"
-							onclick="window.open('history?token=${token}', '_self')">点击查看更多</div>
-						<!---->
-						<!---->
-					</div>
-				</section>
 			</div>
 		</div>
 	</div>
 	<script>!function(e,n){if(!n.__SV){var a,s,t=window;try{var r,p,o,i=t.location,c=i.hash;r=function(e,t){return(p=e.match(RegExp(t+"=([^&]*)")))?p[1]:null},c&&r(c,"state")&&("mpeditor"===(o=JSON.parse(decodeURIComponent(r(c,"state")))).action&&(t.sessionStorage.setItem("_mpcehash",c),history.replaceState(o.desiredHash||"",e.title,i.pathname+i.search)))}catch(e){}(window.DATracker=n)._i=[],n.init=function(e,t,r){function p(e,t){var r=t.split(".");2==r.length&&(e=e[r[0]],t=r[1]),e[t]=function(){e.push([t].concat(Array.prototype.slice.call(arguments,0)))}}var o=n;for(void 0!==r?o=n[r]=[]:r="DATracker",o.people=o.people||[],o.toString=function(e){var t="DATracker";return"DATracker"!==r&&(t+="."+r),e||(t+=" (stub)"),t},o.people.toString=function(){return o.toString(1)+".people (stub)"},a="register_attributes register_attributes_once clear_attributes unregister_attributes current_attributes single_pageview disable time_event get_appStatus track set_userId track_pageview track_links track_forms register register_once alias unregister identify login logout signup name_tag set_config reset people.set people.set_once people.set_realname people.set_country people.set_province people.set_city people.set_age people.set_gender people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.set_populationWithAccount  people.set_location people.set_birthday people.set_region people.set_account".split(" "),s=0;s<a.length;s++)p(o,a[s]);n._i.push([e,t,r])},n.__SV=1.2,(t=e.createElement("script")).type="text/javascript",t.async=!0,t.src="https://hubble-js-bucket.nosdn.127.net/DATracker.globals.1.4.0.js",(r=e.getElementsByTagName("script")[0]).parentNode.insertBefore(t,r)}}(document,window.DATracker||[]),DATracker.init("MA-9E66-C87EFACB60BC");</script>
-	<script type="text/javascript" src="./星球_files/manifest-cbd2180a.js.下载"></script>
-	<script type="text/javascript" src="./星球_files/vendor-4f9e6f25.js.下载"></script>
-	<script type="text/javascript" src="./星球_files/app-1fe48405.js.下载"></script>
+	<script type="text/javascript"
+		src="./邀请码_files/manifest-750d861c.js.下载"></script>
+	<script type="text/javascript" src="./邀请码_files/vendor-4f9e6f25.js.下载"></script>
+	<script type="text/javascript" src="./邀请码_files/app-c60641b3.js.下载"></script>
 </body>
 </html>
