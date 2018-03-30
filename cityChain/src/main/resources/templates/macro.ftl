@@ -1,4 +1,4 @@
-<#macro timeline_dt datetime>
+<#macro formateDt datetime=.now>
 <#assign ct = (.now?long-datetime?long)/1000>
 <#if ct gte 31104000><#--n年前-->${(ct/31104000)?int}年前
 	<#t><#elseif ct gte 2592000><#--n月前-->${(ct/2592000)?int}个月前

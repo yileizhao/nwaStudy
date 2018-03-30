@@ -2,6 +2,7 @@ package com.pantou.cityChain.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.pantou.cityChain.consts.CoinEnum;
 import com.pantou.cityChain.consts.GlobalConst;
+import com.pantou.cityChain.entity.CoinDayEntity;
 import com.pantou.cityChain.repository.CoinDayRepository;
 import com.pantou.cityChain.repository.RedisRepository;
 import com.pantou.cityChain.repository.UserRepository;
@@ -25,6 +27,9 @@ public class QuartzService {
 
 	@Autowired
 	private RedisRepository redisRepository;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private CoinDayRepository coinDayRepository;
@@ -63,6 +68,8 @@ public class QuartzService {
 	 */
 	@Scheduled(cron = "0 0 * * * *")
 	public void dayCoinTotal() {
+		Map<CoinEnum, Double> calAllCoinsSum = userService.calAllCoinsSum();
+		CoinDayEntity coinDayEntity = coinDayRepository.findByDate(TimeUtil.sdfYmd.format(new Date(TimeUtil.now())));
 		System.out.println("发放city币: " + 1 + "@" + TimeUtil.sdfYmdhms.format(new Date(1)));
 	}
 }

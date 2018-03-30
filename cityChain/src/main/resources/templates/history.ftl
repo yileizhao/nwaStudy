@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0036)https://star.8.163.com/m#/coinRecord -->
+<#include "macro.ftl">
 <html style="font-size: 69.3333px;">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -93,7 +94,8 @@
 									<tr data-v-88de3002="">
 										<td data-v-88de3002="" class="nickname center">${item.type.value} ${item.plusMinus.value}</td>
 										<td data-v-88de3002="" class="nickname center">${item.cnt}${item.coin.value}</td>
-										<td data-v-88de3002="" class="nickname center">${item.time?number_to_datetime}</td>
+										<!-- ${item.time?number_to_datetime} 格式化标准年月日时分秒 -->
+										<td data-v-88de3002="" class="nickname center"><@formateDt datetime=item.time?long /></td>
 									</tr>
 									</#list>
 								</tbody>
