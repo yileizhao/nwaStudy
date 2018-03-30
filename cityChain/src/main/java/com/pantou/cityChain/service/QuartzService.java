@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.pantou.cityChain.consts.CoinEnum;
 import com.pantou.cityChain.consts.GlobalConst;
+import com.pantou.cityChain.repository.CoinDayRepository;
 import com.pantou.cityChain.repository.RedisRepository;
 import com.pantou.cityChain.repository.UserRepository;
 import com.pantou.cityChain.util.TimeUtil;
@@ -24,12 +25,15 @@ public class QuartzService {
 
 	@Autowired
 	private RedisRepository redisRepository;
+	
+	@Autowired
+	private CoinDayRepository coinDayRepository;
 
 	/*
 	 * 自动发放city币
 	 */
 	@Scheduled(cron = "0 * * * * *")
-	public void timer() {
+	public void autoCityHarvest() {
 		// TODO 宕机补差
 		long now = TimeUtil.now();
 		long time = now - GlobalConst.baseCityCoinAddTime;
@@ -52,5 +56,13 @@ public class QuartzService {
 			}
 		}
 		System.out.println("发放city币: " + totalAdd + "@" + TimeUtil.sdfYmdhms.format(new Date(now)));
+	}
+	
+	/*
+	 * city币总量每日统计
+	 */
+	@Scheduled(cron = "0 0 * * * *")
+	public void dayCoinTotal() {
+		System.out.println("发放city币: " + 1 + "@" + TimeUtil.sdfYmdhms.format(new Date(1)));
 	}
 }

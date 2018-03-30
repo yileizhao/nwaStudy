@@ -81,12 +81,12 @@
 			</div>
 			<div data-v-1e872eea="" class="base-info-wrap">
 				<div data-v-1e872eea="" class="base-info">
-					<div data-v-1e872eea="" class="value">0</div>
-					<div data-v-1e872eea="" class="cn-desc">黑钻总产值</div>
+					<div data-v-1e872eea="" class="value">${total}</div>
+					<div data-v-1e872eea="" class="cn-desc">city币总产值</div>
 				</div>
 				<div data-v-1e872eea="" class="base-info">
-					<div data-v-1e872eea="" class="value">0</div>
-					<div data-v-1e872eea="" class="cn-desc">黑钻昨日产值</div>
+					<div data-v-1e872eea="" class="value">${yesterday}</div>
+					<div data-v-1e872eea="" class="cn-desc">city币昨日产值</div>
 				</div>
 			</div>
 			<img data-v-1e872eea="" src="/imgs/grjz.187c45e.png"

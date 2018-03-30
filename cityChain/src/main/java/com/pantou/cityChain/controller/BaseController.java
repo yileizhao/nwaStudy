@@ -102,7 +102,7 @@ public class BaseController {
 				} else { // 收获
 					// TODO redis收获记录过量，存到mysql
 					double harvest = (double) map.get(coinKey);
-					userEntity.setCoinCity(userEntity.getCoinCity() + harvest);
+					userEntity.addCoin(CoinEnum.CoinCity, harvest);
 					userRepository.save(userEntity);
 					redisRepository.delMapField(key, coinKey);
 					historyRepository.save(new HistoryEntity(id, TimeUtil.now(), harvest, CoinEnum.CoinCity,

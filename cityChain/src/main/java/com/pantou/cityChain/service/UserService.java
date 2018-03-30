@@ -1,6 +1,9 @@
 package com.pantou.cityChain.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.alibaba.fastjson.JSONObject;
+import com.pantou.cityChain.consts.CoinEnum;
 import com.pantou.cityChain.consts.GlobalConst;
 import com.pantou.cityChain.repository.UserRepository;
 import com.pantou.cityChain.util.GlobalUtil;
@@ -37,6 +42,7 @@ public class UserService {
 		for (int i = 0; i < GlobalConst.smsCodeLen; i++) {
 			smsCode += GlobalConst.smsCodeSource.charAt(GlobalUtil.random.nextInt(smsCodeSourceLen));
 		}
+		System.out.println(smsCode);
 		// return smsCode;
 		return "123456";
 	}
@@ -67,5 +73,25 @@ public class UserService {
 		List<T> list = query.getResultList();
 		entityManager.close();
 		return list;
+	}
+
+	/*
+	 * 统计所用用户币总和
+	 */
+	public Map<CoinEnum, Double> calAllCoinsSum() {
+		Map<CoinEnum, Double> result = new HashMap<CoinEnum, Double>();
+		for (CoinEnum coinEnum : CoinEnum.values()) {
+			result.put(coinEnum, 0d);
+		}
+		List<Object> queryAllCoins = userRepository.queryAllCoins();
+		for (Object object : queryAllCoins) {
+			if (object != null) {
+				for (Entry<String, Object> entry : ((JSONObject) object).entrySet()) {
+					CoinEnum coinEnum = CoinEnum.valueOf(entry.getKey());
+					result.put(coinEnum, result.get(coinEnum) + (Double) entry.getValue());
+				}
+			}
+		}
+		return result;
 	}
 }

@@ -19,9 +19,11 @@ import com.pantou.cityChain.consts.CoinEnum;
 import com.pantou.cityChain.consts.GlobalConst;
 import com.pantou.cityChain.consts.LangConst;
 import com.pantou.cityChain.consts.PowerEnum;
+import com.pantou.cityChain.entity.CoinDayEntity;
 import com.pantou.cityChain.entity.HistoryEntity;
 import com.pantou.cityChain.entity.PowerHistoryEntity;
 import com.pantou.cityChain.entity.UserEntity;
+import com.pantou.cityChain.repository.CoinDayRepository;
 import com.pantou.cityChain.repository.PowerHistoryRepository;
 import com.pantou.cityChain.repository.RedisRepository;
 import com.pantou.cityChain.repository.UserRepository;
@@ -50,15 +52,8 @@ public class H5Controller {
 	@Autowired
 	private PowerHistoryRepository powerHistoryRepository;
 
-	/**
-	 * 介绍
-	 */
-	@RequestMapping("/h5/intro")
-	public String intro(Map<String, Object> map) {
-		map.put("total", 10000);
-		map.put("yesterday", 100);
-		return "intro";
-	}
+	@Autowired
+	private CoinDayRepository coinDayRepository;
 
 	/**
 	 * 攻略
@@ -66,6 +61,18 @@ public class H5Controller {
 	@RequestMapping("/h5/strategy")
 	public String strategy(Map<String, Object> map) {
 		return "strategy";
+	}
+
+	/**
+	 * 介绍
+	 */
+	@RequestMapping("/h5/intro")
+	public String intro(Map<String, Object> map) {
+		CoinDayEntity coinDayEntity = coinDayRepository.findByDate(TimeUtil.sdfYmd.format(new Date(TimeUtil.now())));
+		map.put("total", userService.calAllCoinsSum().get(CoinEnum.CoinCity));
+		map.put("yesterday", coinDayEntity == null ? 0 : coinDayEntity.getDayTotal());
+
+		return "intro";
 	}
 
 	/**
@@ -201,10 +208,7 @@ public class H5Controller {
 			} else { // 有效请求
 				jsonBase.init(LangConst.baseSuccess);
 
-				List<TwoTuple<CoinEnum, Double>> coins = new ArrayList<TwoTuple<CoinEnum, Double>>();
-				coins.add(new TwoTuple<CoinEnum, Double>(CoinEnum.CoinCity, userEntity.getCoinCity()));
-				coins.add(new TwoTuple<CoinEnum, Double>(CoinEnum.CoinAtm, userEntity.getCoinAtm()));
-				map.put("coins", coins);
+				map.put("coins", GlobalUtil.formateCoins(userEntity.getCoins()));
 			}
 		} else { // 参数错误
 			jsonBase.init(LangConst.baseParamError);

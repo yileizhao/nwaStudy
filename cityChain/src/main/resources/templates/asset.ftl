@@ -89,11 +89,11 @@
 							class="bizmodule__record-cells bottom-line">
 							<table data-v-88de3002="">
 								<tbody data-v-88de3002="">
-									<#list coins as item>
-									<tr data-v-88de3002="" onclick="window.open('assetIntro?coin=${item.first}&cnt=${item.second}', '_self')">
-										<td data-v-88de3002="" class="nickname center">${item.first.value} ${item.first.value}</td>
-										<td data-v-88de3002="" class="nickname center">${item.second}</td>
-									</tr>
+									<#list coins as key, value>
+										<tr data-v-88de3002="" onclick="window.open('assetIntro?coin=${key}&cnt=${value}', '_self')">
+											<td data-v-88de3002="" class="nickname center">${key.value} ${key.value}</td>
+											<td data-v-88de3002="" class="nickname center">${value}</td>
+										</tr>
 									</#list>
 								</tbody>
 							</table>

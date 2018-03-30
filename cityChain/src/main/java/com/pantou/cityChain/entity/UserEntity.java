@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.alibaba.fastjson.JSONObject;
+import com.pantou.cityChain.consts.CoinEnum;
+
 /*
  * 用户历史记录实体
  */
@@ -26,13 +29,19 @@ public class UserEntity {
 	private String idcard; // 身份证号码
 	private long timeIdcard; // 身份证号码，最后校验时间
 
-	
-	private double coinCity; // city币
-	private double coinAtm; // 代币
+	private JSONObject coins = new JSONObject(); // 各种币数量
 
 	private String token; // 令牌
 	private long timeBase; // 最后访问基地时间（日活跃）
 	private byte[] qrCode; // 二维码数组
+
+	// 币增减
+	public void addCoin(CoinEnum coincity, double cnt) {
+		String coinName = coincity.name();
+		if (CoinEnum.valueOf(coinName) != null) {
+			coins.put(coinName, (coins.containsKey(coinName) ? coins.getDouble((coinName)) : 0) + cnt);
+		}
+	}
 
 	public long getId() {
 		return id;
@@ -122,20 +131,12 @@ public class UserEntity {
 		this.timeIdcard = timeIdcard;
 	}
 
-	public double getCoinCity() {
-		return coinCity;
+	public JSONObject getCoins() {
+		return coins;
 	}
 
-	public void setCoinCity(double coinCity) {
-		this.coinCity = coinCity;
-	}
-
-	public double getCoinAtm() {
-		return coinAtm;
-	}
-
-	public void setCoinAtm(double coinAtm) {
-		this.coinAtm = coinAtm;
+	public void setCoins(JSONObject coins) {
+		this.coins = coins;
 	}
 
 	public String getToken() {
@@ -161,4 +162,5 @@ public class UserEntity {
 	public void setQrCode(byte[] qrCode) {
 		this.qrCode = qrCode;
 	}
+
 }

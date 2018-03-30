@@ -13,7 +13,9 @@ import com.pantou.cityChain.entity.PowerHistoryEntity;
  */
 public interface PowerHistoryRepository extends CrudRepository<PowerHistoryEntity, Long> {
 
-	// 根据条件获取记录
+	/*
+	 * 根据条件获取记录
+	 */
 	@Query("select phe from PowerHistoryEntity phe where phe.userId = ?1 and phe.power = ?2")
 	public Page<PowerHistoryEntity> getByPower(long id, PowerEnum power, Pageable pageable);
 
