@@ -151,9 +151,8 @@
 				<div data-v-0f719103="" class="total-li"
 					onclick="window.open('power?token=${token}', '_self')">当前算力：${power}</div>
 				<div data-v-0f719103="" class="use-info-btn">
-					<a href="intro">介</a>
-					 <a href="strategy">秘</a>
-					 <a href="invite?token=${token}">邀请</a>
+					<a href="intro">介绍</a>
+					 <a href="strategy">秘籍</a>
 				</div>
 				<div data-v-0f719103="" class="popo">
 					<#list coins as item>
@@ -168,7 +167,7 @@
 					<!---->
 					<div data-v-0f719103="" class="auction-notice">New</div>
 					<a data-v-0f719103="" href="asset?token=${token}" class="left btn1">我的资产</a>
-					<a data-v-0f719103="" href="task" class="right btn3">提升算力</a>
+					<a data-v-0f719103="" href="task?token=${token}" class="right btn3">提升算力</a>
 				</div>
 			</div>
 			<div data-v-0f719103="" class="section2">

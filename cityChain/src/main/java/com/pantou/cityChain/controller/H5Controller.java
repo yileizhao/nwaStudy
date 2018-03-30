@@ -72,8 +72,27 @@ public class H5Controller {
 	 * 任务
 	 */
 	@RequestMapping("/h5/task")
-	public String task(Map<String, Object> map) {
-		return "task";
+	public String task(@RequestParam String token, Map<String, Object> map) {
+		JsonBase jsonBase = new JsonBase();
+		if (!StringUtils.isEmpty(token)) {
+			UserEntity userEntity = userRepository.findByToken(token);
+			if (userEntity == null) { // 令牌错误
+				jsonBase.init(LangConst.baseToken);
+			} else { // 有效请求
+				jsonBase.init(LangConst.baseSuccess);
+
+				map.put("token", token);
+			}
+		} else { // 参数错误
+			jsonBase.init(LangConst.baseParamError);
+		}
+
+		if (jsonBase.getCode() != LangConst.baseSuccess.first) {
+			map.put("jsonBase", JSONObject.toJSONString(jsonBase));
+			return "error";
+		} else {
+			return "task";
+		}
 	}
 
 	/**

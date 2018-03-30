@@ -27,7 +27,7 @@ public class GlobalConst {
 	public static int loginPower = 2; // 每日登录增加原力
 	public static int treasureBoxMax = 1; // 每天开宝箱最大次数（最后一个钻石领取后）
 	public static int powerInit = 30; // 注册原力初始值
-	public static int coinCityTotalPerHour = 100; // 每小时city币投放总量
+	public static double coinCityPerHour = 0.05; // 每人平均获取city币数量
 	public static long baseCityCoinAddTime = TimeUnit.MINUTES.toMillis(48); // city币最后一次活跃后自动增长两天
 	public static int baseCityCoinMax = 48; // city币最多未收取48次
 	public static int coinHisotoryPageSize = 3; // city币收获记录分页条数

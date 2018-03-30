@@ -37,13 +37,14 @@ public class QuartzService {
 		// TODO 上线前改为0
 		double powerTotal = (powerTotalObject == null ? 0 : powerTotalObject);
 		List<Object> objects = userRepository.queryActiveUsers(time);
+		double powerAvg = powerTotal / objects.size();
 		double totalAdd = 0;
-		if (powerTotal > 0) {
+		if (powerTotal > 0 && !objects.isEmpty()) {
 			for (Object object : objects) {
 				Object[] objectArr = (Object[]) object;
 				String key = GlobalConst.redisMapCoinHarvest + objectArr[0];
 				if (redisRepository.getMapAll(key).size() < GlobalConst.baseCityCoinMax) {
-					double add = (int) objectArr[1] / powerTotal * GlobalConst.coinCityTotalPerHour;
+					double add = (int) objectArr[1] / powerAvg * GlobalConst.coinCityPerHour;
 					totalAdd += add;
 					redisRepository.addMapField(key, now + "", add);
 					WebSocketService.sendMessageAll((String) objectArr[2] + "获得" + add + CoinEnum.CoinCity.getValue());

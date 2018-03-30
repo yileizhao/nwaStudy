@@ -84,17 +84,13 @@
 				<div class="module__box no"
 					style="background-color: rgb(255, 255, 255);">
 					<section data-v-e5119ff6="" class="task-block">
-						<div data-v-e5119ff6="" class="task-wrap invite open">
+						<div data-v-e5119ff6="" class="task-wrap invite open" onclick="window.open('invite?token=${token}', '_self')">
 							<div class="task-icon"></div>
 							<div>
 								<div class="task-name">邀请10名好友</div>
 								<div class="task-desc">登录查看邀请码</div>
 							</div>
-							<!---->
 							<div class="origin-add">+100原力</div>
-							<!---->
-							<!---->
-							<!---->
 						</div>
 						<div data-v-e5119ff6="" class="task-wrap sign open">
 							<div class="task-icon"></div>
