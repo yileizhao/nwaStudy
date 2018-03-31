@@ -26,10 +26,6 @@ function powerLoadMore(page) {
 	if (obj instanceof Array) {
 		var objLen = obj.length;
 		for (i = 0; i < objLen; i++) {
-			$("#historyDiv").append("<tr data-v-88de3002=''>
-											<td data-v-88de3002='' class='nickname align'>obj[i].first<br /><font size='2'>obj[i].second</font></td>
-											<td data-v-88de3002='' class="nickname center'>obj[i].third</td>
-										</tr>");
 		}
 		if (objLen == 0) {
 			$("#moreDivSub").remove();
