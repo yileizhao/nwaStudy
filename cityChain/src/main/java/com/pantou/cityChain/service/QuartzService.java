@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSONObject;
 import com.pantou.cityChain.consts.CoinEnum;
 import com.pantou.cityChain.consts.GlobalConst;
 import com.pantou.cityChain.entity.CoinDayEntity;
@@ -27,17 +28,18 @@ public class QuartzService {
 
 	@Autowired
 	private RedisRepository redisRepository;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private CoinDayRepository coinDayRepository;
 
 	/*
-	 * 自动发放city币
+	 * 自动发放city币 第一次延迟1秒执行，当执行完后2秒再执行：@Scheduled(initialDelay = 1000, fixedDelay =
+	 * 2000)
 	 */
-	@Scheduled(cron = "0 * * * * *")
+	@Scheduled(cron = "0 * * * * ?")
 	public void autoCityHarvest() {
 		// TODO 宕机补差
 		long now = TimeUtil.now();
@@ -62,14 +64,25 @@ public class QuartzService {
 		}
 		System.out.println("发放city币: " + totalAdd + "@" + TimeUtil.sdfYmdhms.format(new Date(now)));
 	}
-	
+
 	/*
 	 * city币总量每日统计
 	 */
-	@Scheduled(cron = "0 0 * * * *")
+	@Scheduled(cron = "0 4 * * * ?")
 	public void dayCoinTotal() {
 		Map<CoinEnum, Double> calAllCoinsSum = userService.calAllCoinsSum();
 		CoinDayEntity coinDayEntity = coinDayRepository.findByDate(TimeUtil.sdfYmd.format(new Date(TimeUtil.now())));
-		System.out.println("发放city币: " + 1 + "@" + TimeUtil.sdfYmdhms.format(new Date(1)));
+		JSONObject historyTotal = new JSONObject();
+		JSONObject dayTotal = new JSONObject();
+		for (CoinEnum coinEnum : CoinEnum.values()) {
+			String coinEnumName = coinEnum.name();
+			historyTotal.put(coinEnumName, calAllCoinsSum.get(coinEnum));
+			dayTotal.put(coinEnumName, calAllCoinsSum.get(coinEnum)
+					- (coinDayEntity == null ? 0 : coinDayEntity.getHistoryTotal().getDoubleValue(coinEnumName)));
+		}
+		CoinDayEntity coinDayEntityResult = new CoinDayEntity(TimeUtil.sdfYmd.format(new Date(TimeUtil.now())),
+				historyTotal, dayTotal);
+		coinDayRepository.save(coinDayEntityResult);
+		System.out.println("city币总量每日统计: " + JSONObject.toJSONString(coinDayEntityResult));
 	}
 }

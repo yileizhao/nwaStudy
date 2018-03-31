@@ -33,6 +33,17 @@ public class CoinDayEntity {
 	@Column(name = "dayTotal", columnDefinition = "BLOB", nullable = true)
 	private JSONObject dayTotal; // city币每日产量
 
+	public CoinDayEntity() {
+		super();
+	}
+
+	public CoinDayEntity(String date, JSONObject historyTotal, JSONObject dayTotal) {
+		super();
+		this.date = date;
+		this.historyTotal = historyTotal;
+		this.dayTotal = dayTotal;
+	}
+
 	public long getId() {
 		return id;
 	}

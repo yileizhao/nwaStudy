@@ -16,7 +16,7 @@ function loadMore(divName, page) {
 			if (divName == "historyDiv") {
 				addDiv = "<tr data-v-88de3002=''><td data-v-88de3002='' class='nickname left'><img src='/imgs/" + obj[i].first + "' style='width: 30px;'></img>" + obj[i].second + "</td><td data-v-88de3002='' class='nickname center'>" + obj[i].third + "</td><td data-v-88de3002='' class='nickname center'>" + obj[i].fourd + "</td></tr>";
 			} else if(divName == "powerDiv") {
-				addDiv = "<tr data-v-88de3002=''><td data-v-88de3002='' class='nickname align'>obj[i].first<br /><font size='2'>obj[i].second</font></td><td data-v-88de3002='' class='nickname center'>obj[i].third</td></tr>";
+				addDiv = "<tr data-v-88de3002=''><td data-v-88de3002='' class='nickname align'>" + obj[i].first + "<br /><font size='2'>" + obj[i].second + "</font></td><td data-v-88de3002='' class='nickname center'>" + obj[i].third + "</td></tr>";
 			}
 			$("#" + divName).append(addDiv);
 		}

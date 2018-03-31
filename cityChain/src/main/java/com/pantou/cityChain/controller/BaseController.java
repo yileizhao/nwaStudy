@@ -129,6 +129,7 @@ public class BaseController {
 	/*
 	 * 币收获记录
 	 */
+	@SuppressWarnings("deprecation")
 	@RequestMapping("/base/history")
 	public JsonBase history(@RequestParam String token, @RequestParam int coin, @RequestParam int type,
 			@RequestParam int plusMinus, @RequestParam int page) {
@@ -150,6 +151,7 @@ public class BaseController {
 				if (plusMinus >= 0 && plusMinus < PlusMinusEnum.values().length) {
 					sql += " and he.plusMinus = " + plusMinus;
 				}
+				sql += " order by he.time desc";
 				List<Object> historys = userService.findBysql(HistoryEntity.class, sql,
 						new TwoTuple<Integer, Integer>(page < 0 ? 0 : page, GlobalConst.coinHisotoryPageSize));
 				List<FourTuple<String, String, String, String>> historysResult = new ArrayList<FourTuple<String, String, String, String>>();
@@ -183,7 +185,7 @@ public class BaseController {
 			} else { // 有效请求
 				jsonBase.init(LangConst.baseSuccess);
 
-				String sql = "select phe from PowerHistoryEntity phe where phe.userId = " + userEntity.getId();
+				String sql = "select phe from PowerHistoryEntity phe where phe.userId = " + userEntity.getId() + " order by phe.time desc";
 				if (power >= 0 && power < PowerEnum.values().length) {
 					sql += " and phe.power = " + power;
 				}
@@ -193,7 +195,7 @@ public class BaseController {
 				for (Object object : powers) {
 					PowerHistoryEntity powerHistoryEntity = (PowerHistoryEntity) object;
 					powersResult.add(new FourTuple<String, String, String, String>(
-							powerHistoryEntity.getPower().getValue(), TimeUtil.formatText(powerHistoryEntity.getTime()),
+							powerHistoryEntity.getPower().getValue(), TimeUtil.sdfYmdhms.format(new Date(powerHistoryEntity.getTime())),
 							"+" + powerHistoryEntity.getCnt(), null));
 				}
 				jsonBase.setObject(powersResult);

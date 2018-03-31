@@ -164,7 +164,7 @@ public class H5Controller {
 				map.put("token", token);
 				map.put("power", userEntity.getPower());
 				List<FourTuple<String, Double, Double, Double>> coins = new ArrayList<FourTuple<String, Double, Double, Double>>();
-				String sql = "select he from HistoryEntity he";
+				String sql = "select he from HistoryEntity he" + " order by he.time desc";
 				map.put("history", userService.findBysql(HistoryEntity.class, sql,
 						new TwoTuple<Integer, Integer>(0, GlobalConst.coinHisotoryPageSize)));
 				Set<Integer> indexSet = new HashSet<Integer>();
@@ -269,7 +269,7 @@ public class H5Controller {
 				jsonBase.init(LangConst.baseSuccess);
 
 				map.put("power", userEntity.getPower());
-				String sql = "select phe from PowerHistoryEntity phe where phe.userId = " + userEntity.getId();
+				String sql = "select phe from PowerHistoryEntity phe where phe.userId = " + userEntity.getId() + " order by phe.time desc";
 				map.put("powerHistory", userService.findBysql(PowerHistoryEntity.class, sql,
 						new TwoTuple<Integer, Integer>(0, GlobalConst.coinHisotoryPageSize)));
 			}
@@ -298,7 +298,7 @@ public class H5Controller {
 			} else { // 有效请求
 				jsonBase.init(LangConst.baseSuccess);
 
-				String sql = "select he from HistoryEntity he";
+				String sql = "select he from HistoryEntity he" + " order by he.time desc";
 				map.put("history", userService.findBysql(HistoryEntity.class, sql,
 						new TwoTuple<Integer, Integer>(0, GlobalConst.coinHisotoryPageSize)));
 			}
