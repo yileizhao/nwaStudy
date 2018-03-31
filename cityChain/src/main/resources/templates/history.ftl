@@ -106,7 +106,7 @@ var pageCur = 0;
 						</section>
 					</div>
 					<div class="module__fetch__ft" id = "moreDiv">
-						<div class="module__fetch__more" onclick="pageCur = pageCur + 1;historyLoadMore(pageCur)" id="moreDivSub">点击查看更多</div>
+						<div class="module__fetch__more" onclick="pageCur = pageCur + 1;loadMore('historyDiv', pageCur)" id="moreDivSub">点击查看更多</div>
 					</div>
 				</section>
 			</section>

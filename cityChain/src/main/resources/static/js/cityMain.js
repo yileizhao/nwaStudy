@@ -1,31 +1,24 @@
-// ------------------------------------- history.ftl
-function historyLoadMore(page) {
-	var obj = $.ajax({
-		url : "/base/history?token=" + $.cookie("token")
-				+ "&coin=0&type=0&plusMinus=0&page=" + page,
-		async : false
-	}).responseJSON.object;
-	if (obj instanceof Array) {
-		var objLen = obj.length;
-		for (i = 0; i < objLen; i++) {
-			$("#historyDiv").append("<tr data-v-88de3002=''><td data-v-88de3002='' class='nickname left'><img src='/imgs/" + obj[i].first + "' style='width: 30px;'></img>" + obj[i].second + "</td><td data-v-88de3002='' class='nickname center'>" + obj[i].third + "</td><td data-v-88de3002='' class='nickname center'>" + obj[i].fourd + "</td></tr>");
-		}
-		if (objLen == 0) {
-			$("#moreDivSub").remove();
-			$("#moreDiv").append("<div class='module__fetch__more'>没有更多了</div>");
-		}
+function loadMore(divName, page) {
+	var url = "";
+	var addDiv = "";
+	if (divName == "historyDiv") {
+		url = "/base/history?token=" + $.cookie("token")+ "&coin=0&type=0&plusMinus=0&page=" + page;
+	} else if(divName == "powerDiv") {
+		url = "/base/powerHistory?token=" + $.cookie("token")+ "&power=-1&page=" + page;
 	}
-}
-// ------------------------------------- power.ftl
-function powerLoadMore(page) {
 	var obj = $.ajax({
-		url : "/base/powerHistory?token=" + $.cookie("token")
-				+ "&power=-1&page=" + page,
+		url : url,
 		async : false
 	}).responseJSON.object;
 	if (obj instanceof Array) {
 		var objLen = obj.length;
 		for (i = 0; i < objLen; i++) {
+			if (divName == "historyDiv") {
+				addDiv = "<tr data-v-88de3002=''><td data-v-88de3002='' class='nickname left'><img src='/imgs/" + obj[i].first + "' style='width: 30px;'></img>" + obj[i].second + "</td><td data-v-88de3002='' class='nickname center'>" + obj[i].third + "</td><td data-v-88de3002='' class='nickname center'>" + obj[i].fourd + "</td></tr>";
+			} else if(divName == "powerDiv") {
+				addDiv = "<tr data-v-88de3002=''><td data-v-88de3002='' class='nickname align'>obj[i].first<br /><font size='2'>obj[i].second</font></td><td data-v-88de3002='' class='nickname center'>obj[i].third</td></tr>";
+			}
+			$("#" + divName).append(addDiv);
 		}
 		if (objLen == 0) {
 			$("#moreDivSub").remove();

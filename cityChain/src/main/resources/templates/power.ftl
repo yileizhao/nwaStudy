@@ -108,7 +108,7 @@ var pageCur = 0;
 						<section data-v-5f4f905e=""
 							class="bizmodule__record-cells bottom-line">
 							<table data-v-88de3002="">
-								<tbody data-v-88de3002="">
+								<tbody data-v-88de3002=""  id="powerDiv">
 									<#list powerHistory as item>
 										<tr data-v-88de3002="">
 											<td data-v-88de3002="" class="nickname align">${item.power.value}<br /><font size="2">${item.time?number_to_datetime}</font></td>
@@ -122,7 +122,7 @@ var pageCur = 0;
 					</div>
 				</section>
 				<div class="module__fetch__ft" id = "moreDiv">
-					<div class="module__fetch__more" onclick="pageCur = pageCur + 1;powerLoadMore(pageCur)" id="moreDivSub">点击查看更多</div>
+					<div class="module__fetch__more" onclick="pageCur = pageCur + 1;loadMore('powerDiv', pageCur)" id="moreDivSub">点击查看更多</div>
 				</div>
 			</section>
 		</div>
