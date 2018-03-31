@@ -20,13 +20,16 @@ function historyLoadMore(page) {
 function powerLoadMore(page) {
 	var obj = $.ajax({
 		url : "/base/powerHistory?token=" + $.cookie("token")
-				+ "&power=0&page=" + page,
+				+ "&power=-1&page=" + page,
 		async : false
 	}).responseJSON.object;
 	if (obj instanceof Array) {
 		var objLen = obj.length;
 		for (i = 0; i < objLen; i++) {
-			$("#historyDiv").append("<tr data-v-88de3002=''><td data-v-88de3002='' class='nickname left'><img src='/imgs/" + obj[i].first + "' style='width: 30px;'></img>" + obj[i].second + "</td><td data-v-88de3002='' class='nickname center'>" + obj[i].third + "</td><td data-v-88de3002='' class='nickname center'>" + obj[i].fourd + "</td></tr>");
+			$("#historyDiv").append("<tr data-v-88de3002=''>
+											<td data-v-88de3002='' class='nickname align'>obj[i].first<br /><font size='2'>obj[i].second</font></td>
+											<td data-v-88de3002='' class="nickname center'>obj[i].third</td>
+										</tr>");
 		}
 		if (objLen == 0) {
 			$("#moreDivSub").remove();

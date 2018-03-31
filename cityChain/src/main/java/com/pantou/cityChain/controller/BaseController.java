@@ -187,8 +187,16 @@ public class BaseController {
 				if (power >= 0 && power < PowerEnum.values().length) {
 					sql += " and phe.power = " + power;
 				}
-				jsonBase.setObject(userService.findBysql(PowerHistoryEntity.class, sql,
-						new TwoTuple<Integer, Integer>(page < 0 ? 0 : page, GlobalConst.coinHisotoryPageSize)));
+				List<Object> powers = userService.findBysql(PowerHistoryEntity.class, sql,
+						new TwoTuple<Integer, Integer>(page < 0 ? 0 : page, GlobalConst.coinHisotoryPageSize));
+				List<FourTuple<String, String, String, String>> powersResult = new ArrayList<FourTuple<String, String, String, String>>();
+				for (Object object : powers) {
+					PowerHistoryEntity powerHistoryEntity = (PowerHistoryEntity) object;
+					powersResult.add(new FourTuple<String, String, String, String>(
+							powerHistoryEntity.getPower().getValue(), TimeUtil.formatText(powerHistoryEntity.getTime()),
+							"+" + powerHistoryEntity.getCnt(), null));
+				}
+				jsonBase.setObject(powersResult);
 			}
 		} else { // 参数错误
 			jsonBase.init(LangConst.baseParamError);
