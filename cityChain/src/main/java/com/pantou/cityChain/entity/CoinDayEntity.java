@@ -25,12 +25,12 @@ public class CoinDayEntity {
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
-	@Column(length = 65535)
+	@Column(name = "historyTotal", columnDefinition = "BLOB", nullable = true)
 	private JSONObject historyTotal; // city币总量
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
-	@Column(length = 65535)
+	@Column(name = "dayTotal", columnDefinition = "BLOB", nullable = true)
 	private JSONObject dayTotal; // city币每日产量
 
 	public long getId() {

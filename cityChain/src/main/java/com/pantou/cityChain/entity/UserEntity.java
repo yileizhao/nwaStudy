@@ -35,7 +35,7 @@ public class UserEntity {
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
-	@Column(length = 65535)
+	@Column(name = "coins", columnDefinition = "BLOB", nullable = true)
 	private JSONObject coins = new JSONObject(); // 各种币数量
 
 	private String token; // 令牌
