@@ -1,6 +1,8 @@
 package com.pantou.cityChain.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import com.pantou.cityChain.repository.RedisRepository;
 import com.pantou.cityChain.repository.UserRepository;
 import com.pantou.cityChain.service.UserService;
 import com.pantou.cityChain.util.TimeUtil;
+import com.pantou.cityChain.vo.FourTuple;
 import com.pantou.cityChain.vo.JsonBase;
 import com.pantou.cityChain.vo.TwoTuple;
 
@@ -68,9 +71,10 @@ public class BaseController {
 				}
 				userEntity.setTimeBase(now);
 				userRepository.save(userEntity);
-				
+
 				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("coins", redisRepository.getMapAll(GlobalConst.redisMapCoinHarvest + userEntity.getId()));
+				jsonObject.put("coins",
+						redisRepository.getMapAll(GlobalConst.redisMapCoinHarvest + userEntity.getId()));
 				jsonObject.put("nextRefTime",
 						60 - Integer.parseInt(TimeUtil.sdfYmdhms.format(new Date(now)).substring(17)));
 				jsonBase.init(LangConst.baseSuccess);
@@ -145,8 +149,16 @@ public class BaseController {
 				if (plusMinus >= 0 && plusMinus < PlusMinusEnum.values().length) {
 					sql += " and he.plusMinus = " + plusMinus;
 				}
-				jsonBase.setObject(userService.findBysql(PowerHistoryEntity.class, sql,
-						new TwoTuple<Integer, Integer>(page < 0 ? 0 : page, GlobalConst.coinHisotoryPageSize)));
+				List<Object> historys = userService.findBysql(HistoryEntity.class, sql,
+						new TwoTuple<Integer, Integer>(page < 0 ? 0 : page, GlobalConst.coinHisotoryPageSize));
+				List<FourTuple<String, String, String, String>> historysResult = new ArrayList<FourTuple<String, String, String, String>>();
+				for (Object object : historys) {
+					HistoryEntity historyEntity = (HistoryEntity) object;
+					historysResult.add(new FourTuple<String, String, String, String>(historyEntity.getCoin().getImg(),
+							historyEntity.getType().getValue(), historyEntity.getPlusMinus().getValue(),
+							historyEntity.getCnt() + historyEntity.getCoin().getValue()));
+				}
+				jsonBase.setObject(historysResult);
 			}
 		} else { // 参数错误
 			jsonBase.init(LangConst.baseParamError);

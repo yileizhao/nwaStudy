@@ -8,6 +8,11 @@
 	content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
 <meta content="telephone=no" name="format-detection">
 <title>原力记录</title>
+
+<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>   
+<script type="text/javascript" src="/js/cityMain.js"></script>
+
 <script type="text/javascript" async=""
 	src="./原力记录_files/DATracker.globals.1.4.0.js.下载"></script>
 <script>window.NRUM=window.NRUM||{},window.NRUM.config={key:"32fe9c8395ba4b4195f6a845504d4aa5",clientStart:+new Date},function(){var e=document.getElementsByTagName("script")[0],n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src="//nos.netease.com/apmsdk/napm-web-min-1.1.5.js","DEPLOY_ENV_FOR_FE"=="online"&&setTimeout(function(){e.parentNode.insertBefore(n,e)})}();</script>
@@ -103,8 +108,7 @@
 								<tbody data-v-88de3002="">
 									<#list powerHistory as item>
 										<tr data-v-88de3002="">
-											<td data-v-88de3002="" class="nickname center">${item.time}</td>
-											<td data-v-88de3002="" class="nickname center">${item.power.value}</td>
+											<td data-v-88de3002="" class="nickname align">${item.power.value}<br /><font size="2">${item.time?number_to_datetime}</font></td>
 											<td data-v-88de3002="" class="nickname center">+${item.cnt}</td>
 										</tr>
 									</#list>

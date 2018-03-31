@@ -8,9 +8,15 @@
 	content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
 <meta content="telephone=no" name="format-detection">
 <title>星球</title>
+
 <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>   
+<script type="text/javascript" src="/js/cityMain.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
+		$.cookie("token", "${token}"); 
+		
 		var intDiff = ${nextRefTime}; //倒计时总秒数
 		window.setInterval(function(){
 		    intDiff--;
@@ -149,10 +155,9 @@
 					onclick="window.open('intro', '_self')">推广</div>
 					 -->
 				<div data-v-0f719103="" class="total-li"
-					onclick="window.open('power?token=${token}', '_self')">当前算力：${power}</div>
+					onclick="callUrl('power', '算力记录')">当前算力：${power}</div>
 				<div data-v-0f719103="" class="use-info-btn">
-					<a href="intro">介绍</a>
-					 <a href="strategy">秘籍</a>
+					 <a href="javascript:callUrl('strategy')">星球秘籍</a>
 				</div>
 				<div data-v-0f719103="" class="popo">
 					<#list coins as item>

@@ -62,6 +62,14 @@ public class H5Controller {
 	public String strategy(Map<String, Object> map) {
 		return "strategy";
 	}
+	
+	/**
+	 * 我的主页
+	 */
+	@RequestMapping("/h5/home")
+	public String home(Map<String, Object> map) {
+		return "home";
+	}
 
 	/**
 	 * 介绍
