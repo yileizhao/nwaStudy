@@ -62,6 +62,6 @@ public class TimeUtil {
 			r = (diff / minute);
 			return r + "分钟前";
 		}
-		return diff + "秒前";
+		return diff / 1000 + "秒前";
 	}
 }
