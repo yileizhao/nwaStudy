@@ -1,9 +1,13 @@
 package com.pantou.cityChain.entity;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 import com.alibaba.fastjson.JSONObject;
 import com.pantou.cityChain.consts.CoinEnum;
@@ -29,6 +33,9 @@ public class UserEntity {
 	private String idcard; // 身份证号码
 	private long timeIdcard; // 身份证号码，最后校验时间
 
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(length = 65535)
 	private JSONObject coins = new JSONObject(); // 各种币数量
 
 	private String token; // 令牌

@@ -1,9 +1,13 @@
 package com.pantou.cityChain.entity;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -18,7 +22,15 @@ public class CoinDayEntity {
 	private long id;
 
 	private String date; // 日期
+
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(length = 65535)
 	private JSONObject historyTotal; // city币总量
+
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(length = 65535)
 	private JSONObject dayTotal; // city币每日产量
 
 	public long getId() {
