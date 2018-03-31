@@ -1,5 +1,6 @@
 package com.pantou.cityChain.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -155,8 +156,10 @@ public class BaseController {
 				for (Object object : historys) {
 					HistoryEntity historyEntity = (HistoryEntity) object;
 					historysResult.add(new FourTuple<String, String, String, String>(historyEntity.getCoin().getImg(),
-							historyEntity.getType().getValue(), historyEntity.getPlusMinus().getValue(),
-							historyEntity.getCnt() + historyEntity.getCoin().getValue()));
+							historyEntity.getType().getValue(),
+							new BigDecimal(historyEntity.getCnt()).setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue()
+									+ historyEntity.getCoin().getValue(),
+							TimeUtil.formatText(historyEntity.getTime())));
 				}
 				jsonBase.setObject(historysResult);
 			}

@@ -8,6 +8,11 @@
 	content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
 <meta content="telephone=no" name="format-detection">
 <title>黑钻记录</title>
+
+<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>   
+<script type="text/javascript" src="/js/cityMain.js"></script>
+
 <script type="text/javascript" async=""
 	src="./黑钻记录_files/DATracker.globals.1.4.0.js.下载"></script>
 <script>window.NRUM=window.NRUM||{},window.NRUM.config={key:"32fe9c8395ba4b4195f6a845504d4aa5",clientStart:+new Date},function(){var e=document.getElementsByTagName("script")[0],n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src="//nos.netease.com/apmsdk/napm-web-min-1.1.5.js","DEPLOY_ENV_FOR_FE"=="online"&&setTimeout(function(){e.parentNode.insertBefore(n,e)})}();</script>
@@ -76,11 +81,6 @@
 	<div id="app">
 		<!---->
 		<div data-v-49e6a8d4="">
-			<section data-v-49e6a8d4="" class="module__block top-margin">
-				<h3 class="module__title" style="text-align: center;">
-					收支记录
-				</h3>
-			</section>
 			<section data-v-49e6a8d4="" class="module__fetch">
 				<!---->
 				<section data-v-49e6a8d4="" class="module__block top-margin">
@@ -90,8 +90,8 @@
 							<table data-v-88de3002="">
 								<tbody data-v-88de3002="">
 									<#list coins as key, value>
-										<tr data-v-88de3002="" onclick="window.open('assetIntro?coin=${key}&cnt=${value}', '_self')">
-											<td data-v-88de3002="" class="nickname center">${key.value} ${key.value}</td>
+										<tr data-v-88de3002="" onclick="callUrl('assetIntro?coin=${key}&cnt=${value}', '资产详情', 2)">
+											<td data-v-88de3002="" class="nickname left"><img src="/imgs/${key.img}" style="width: 30px;"></img>${key.value}</td>
 											<td data-v-88de3002="" class="nickname center">${value}</td>
 										</tr>
 									</#list>
@@ -101,11 +101,6 @@
 						</section>
 					</div>
 				</section>
-				<div class="module__fetch__ft">
-					<div class="module__fetch__more">点击查看更多</div>
-					<!---->
-					<!---->
-				</div>
 			</section>
 		</div>
 	</div>

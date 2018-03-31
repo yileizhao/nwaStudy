@@ -12,6 +12,9 @@
 <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/js/jquery.cookie.js"></script>   
 <script type="text/javascript" src="/js/cityMain.js"></script>
+<script>
+var pageCur = 0;
+</script>
 
 <script type="text/javascript" async=""
 	src="./原力记录_files/DATracker.globals.1.4.0.js.下载"></script>
@@ -118,8 +121,8 @@
 						</section>
 					</div>
 				</section>
-				<div class="module__fetch__ft">
-					<div class="module__fetch__more">点击查看更多</div>
+				<div class="module__fetch__ft" id = "moreDiv">
+					<div class="module__fetch__more" onclick="pageCur = pageCur + 1;powerLoadMore(pageCur)" id="moreDivSub">点击查看更多</div>
 				</div>
 			</section>
 			<button data-v-5f4f905e="" class="jsxql">获取原力</button>

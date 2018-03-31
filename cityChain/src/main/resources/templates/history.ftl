@@ -13,6 +13,9 @@
 <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/js/jquery.cookie.js"></script>   
 <script type="text/javascript" src="/js/cityMain.js"></script>
+<script>
+var pageCur = 0;
+</script>
 
 <script type="text/javascript" async=""
 	src="./黑钻记录_files/DATracker.globals.1.4.0.js.下载"></script>
@@ -82,11 +85,6 @@
 	<div id="app">
 		<!---->
 		<div data-v-49e6a8d4="">
-			<section data-v-49e6a8d4="" class="module__block top-margin">
-				<h3 class="module__title" style="text-align: center;">
-					收支记录
-				</h3>
-			</section>
 			<section data-v-49e6a8d4="" class="module__fetch">
 				<!---->
 				<section data-v-49e6a8d4="" class="module__block top-margin">
@@ -97,7 +95,7 @@
 								<tbody data-v-88de3002="" id="historyDiv">
 									<#list history as item>
 									<tr data-v-88de3002="">
-										<td data-v-88de3002="" class="nickname center">${item.type.value}${item.plusMinus.value}</td>
+										<td data-v-88de3002="" class="nickname left"><img src="/imgs/${item.coin.img}" style="width: 30px;"></img>${item.type.value}</td>
 										<td data-v-88de3002="" class="nickname center">${item.cnt}${item.coin.value}</td>
 										<td data-v-88de3002="" class="nickname center"><@formateDt datetime=item.time?long /></td>
 									</tr>
@@ -107,8 +105,8 @@
 							<div class="module__fetch__ft"></div>
 						</section>
 					</div>
-					<div class="module__fetch__ft">
-						<div class="module__fetch__more" onclick="historyLoadMore(1)">点击查看更多</div>
+					<div class="module__fetch__ft" id = "moreDiv">
+						<div class="module__fetch__more" onclick="pageCur = pageCur + 1;historyLoadMore(pageCur)" id="moreDivSub">点击查看更多</div>
 					</div>
 				</section>
 			</section>

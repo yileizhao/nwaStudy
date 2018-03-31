@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSONObject;
 import com.arronlong.httpclientutil.HttpClientUtil;
 import com.arronlong.httpclientutil.common.HttpConfig;
+import com.pantou.cityChain.consts.CoinEnum;
 import com.pantou.cityChain.consts.GlobalConst;
 import com.pantou.cityChain.consts.LangConst;
 import com.pantou.cityChain.consts.PowerEnum;
@@ -158,6 +159,9 @@ public class UserController {
 					if (userEntityNickname != null) {
 						jsonBase.init(LangConst.userRegisterNicknameExist);
 					} else { // 有效请求
+						for (CoinEnum coinEnum : CoinEnum.values()) {
+							userEntity.addCoin(coinEnum, 0);
+						}
 						userEntity.setInviteCode(userService.produceInviteCode());
 						userEntity.setNickname(nickname);
 						userEntity.setPower(GlobalConst.powerInit);

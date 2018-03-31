@@ -157,7 +157,7 @@
 				<div data-v-0f719103="" class="total-li"
 					onclick="callUrl('power', '算力记录')">当前算力：${power}</div>
 				<div data-v-0f719103="" class="use-info-btn">
-					 <a href="javascript:callUrl('strategy')">星球秘籍</a>
+					 <a href="javascript:callUrl('strategy', '星球秘籍')">星球秘籍</a>
 				</div>
 				<div data-v-0f719103="" class="popo">
 					<#list coins as item>
@@ -169,10 +169,9 @@
 					</#list>
 				</div>
 				<div data-v-0f719103="" class="btn-group">
-					<!---->
 					<div data-v-0f719103="" class="auction-notice">New</div>
-					<a data-v-0f719103="" href="asset?token=${token}" class="left btn1">我的资产</a>
-					<a data-v-0f719103="" href="task?token=${token}" class="right btn3">提升算力</a>
+					<a data-v-0f719103="" href="javascript:callUrl('asset', '我的资产')" class="left btn1">我的资产</a>
+					<a data-v-0f719103="" href="javascript:callUrl('task', '提升算力')" class="right btn3">提升算力</a>
 				</div>
 			</div>
 			<div data-v-0f719103="" class="section2">
@@ -243,7 +242,7 @@
 					</section>
 					<div class="module__fetch__ft">
 						<div class="module__fetch__more"
-							onclick="window.open('history?token=${token}', '_self')">点击查看更多</div>
+							onclick="callUrl('history', '收支记录')">点击查看更多</div>
 						<!---->
 						<!---->
 					</div>
