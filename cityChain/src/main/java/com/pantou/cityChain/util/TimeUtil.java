@@ -48,17 +48,20 @@ public class TimeUtil {
 			return r + "年前";
 		} else if (diff > month) {
 			r = (diff / month);
-			return r + "个月前";
-		} else if (diff > day) {
+			return r + "月前";
+		} else if (diff > day * 2) {
 			r = (diff / day);
 			return r + "天前";
+		} else if (diff > day) {
+			r = (diff / day);
+			return r + "昨天";
 		} else if (diff > hour) {
 			r = (diff / hour);
-			return r + "个小时前";
+			return r + "小时前";
 		} else if (diff > minute) {
 			r = (diff / minute);
 			return r + "分钟前";
 		}
-		return "刚刚";
+		return diff + "秒前";
 	}
 }
