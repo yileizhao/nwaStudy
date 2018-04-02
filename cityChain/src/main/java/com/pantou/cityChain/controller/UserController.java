@@ -43,6 +43,7 @@ public class UserController {
 	 */
 	@RequestMapping("/user/robot")
 	public JsonBase smsCode(@RequestParam(name = "cnt", required = false, defaultValue = "1") int cnt) {
+		String urlPrefix = "localhost:82";
 		int maxCnt = 10000;
 		cnt = Math.min(cnt, maxCnt);
 		JSONObject jsonObject = new JSONObject();
@@ -51,25 +52,25 @@ public class UserController {
 			try {
 				String mobile = "177253" + endfix;
 				System.out.println(
-						HttpClientUtil.get(HttpConfig.custom().url("http://localhost/user/smsCode?mobile=" + mobile)));
+						HttpClientUtil.get(HttpConfig.custom().url("http://" + urlPrefix + "/user/smsCode?mobile=" + mobile)));
 				Thread.sleep(10);
 
-				System.out.println(HttpClientUtil.get(HttpConfig.custom().url("http://localhost/user/register?mobile="
+				System.out.println(HttpClientUtil.get(HttpConfig.custom().url("http://" + urlPrefix + "/user/register?mobile="
 						+ mobile + "&smsCode=123456&nickname=zyl" + i + "&inviteCode=")));
 				Thread.sleep(10);
 
 				String str = HttpClientUtil.get(
-						HttpConfig.custom().url("http://localhost/user/login?mobile=" + mobile + "&smsCode=123456"));
+						HttpConfig.custom().url("http://" + urlPrefix + "/user/login?mobile=" + mobile + "&smsCode=123456"));
 				System.out.println(str);
 				String token = JSONObject.parseObject(str).getString("object");
 				Thread.sleep(10);
 
-				str = HttpClientUtil.get(HttpConfig.custom().url("http://localhost/user/certification?token=" + token
+				str = HttpClientUtil.get(HttpConfig.custom().url("http://" + urlPrefix + "/user/certification?token=" + token
 						+ "&name=赵亦磊" + endfix + "&idcard=13053519851014" + endfix));
 				System.out.println(str);
 				Thread.sleep(10);
 
-				str = HttpClientUtil.get(HttpConfig.custom().url("http://localhost/base/main?token=" + token));
+				str = HttpClientUtil.get(HttpConfig.custom().url("http://" + urlPrefix + "/base/main?token=" + token));
 				System.out.println(str);
 				Thread.sleep(10);
 
@@ -77,17 +78,17 @@ public class UserController {
 				if (jsonObjectCoins != null) {
 					for (String coinKey : jsonObjectCoins.keySet()) {
 						System.out.println(HttpClientUtil.get(HttpConfig.custom()
-								.url("http://localhost/base/harvest?token=" + token + "&coinKey=" + coinKey)));
+								.url("http://" + urlPrefix + "/base/harvest?token=" + token + "&coinKey=" + coinKey)));
 					}
 				}
 				Thread.sleep(10);
 
 				System.out.println(HttpClientUtil.get(HttpConfig.custom()
-						.url("http://localhost/base/history?token=" + token + "&coin=0&type=0&plusMinus=0&page=0")));
+						.url("http://" + urlPrefix + "/base/history?token=" + token + "&coin=0&type=0&plusMinus=0&page=0")));
 				Thread.sleep(10);
 
 				System.out.println(HttpClientUtil.get(HttpConfig.custom()
-						.url("http://localhost/base/powerHistory?token=" + token + "&power=0&page=0")));
+						.url("http://" + urlPrefix + "/base/powerHistory?token=" + token + "&power=0&page=0")));
 				Thread.sleep(10);
 
 				jsonObject.put("token", token);

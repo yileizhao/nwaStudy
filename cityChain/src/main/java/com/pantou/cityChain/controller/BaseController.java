@@ -185,10 +185,11 @@ public class BaseController {
 			} else { // 有效请求
 				jsonBase.init(LangConst.baseSuccess);
 
-				String sql = "select phe from PowerHistoryEntity phe where phe.userId = " + userEntity.getId() + " order by phe.time desc";
+				String sql = "select phe from PowerHistoryEntity phe where phe.userId = " + userEntity.getId();
 				if (power >= 0 && power < PowerEnum.values().length) {
 					sql += " and phe.power = " + power;
 				}
+				sql += " order by phe.time desc";
 				List<Object> powers = userService.findBysql(PowerHistoryEntity.class, sql,
 						new TwoTuple<Integer, Integer>(page < 0 ? 0 : page, GlobalConst.coinHisotoryPageSize));
 				List<FourTuple<String, String, String, String>> powersResult = new ArrayList<FourTuple<String, String, String, String>>();
